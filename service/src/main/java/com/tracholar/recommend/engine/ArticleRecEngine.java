@@ -1,5 +1,5 @@
 package com.tracholar.recommend.engine;
 
-public class ArticleRecEngine extends SimpleRecEngine {
+public abstract class ArticleRecEngine extends SimpleRecEngine {
 
 }

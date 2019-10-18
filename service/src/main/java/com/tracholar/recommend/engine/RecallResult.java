@@ -1,5 +1,6 @@
 package com.tracholar.recommend.engine;
 
-public interface RecallResult {
-    RecallStrategy getStrategy();
+import com.tracholar.recommend.HasId;
+
+public interface RecallResult extends HasId {
 }

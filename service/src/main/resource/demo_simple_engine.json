@@ -1,0 +1,37 @@
+{
+  "name" : "simple demo engine",
+
+  "recalls" : [
+    {
+      "name": "test-recall1",
+      "class": "com.tracholar.recommend.demo.DemoRecallStrategy",
+      "abtestLayerKey" : "recall",
+      "abtestFlowKey" : "0,1,2,3,4,5,6,7,8,9"
+    }
+  ],
+  "merges" : [
+    {
+      "name": "basic-merge",
+      "class": "com.tracholar.recommend.demo.DemoMergeStrategy"
+    }
+  ],
+  "filters" : [
+    {
+      "name" : "basic-filter",
+      "class" : "com.tracholar.recommend.demo.DemoFilter"
+    }
+
+  ],
+  "rankers" : [
+    {
+      "name" : "basic ranker",
+      "class" : "com.tracholar.recommend.demo.DemoRanker"
+    }
+  ],
+  "reRankers" : [
+    {
+      "name" : "basic re-ranker",
+      "class" : "com.tracholar.recommend.demo.DemoReRanker"
+    }
+  ]
+}

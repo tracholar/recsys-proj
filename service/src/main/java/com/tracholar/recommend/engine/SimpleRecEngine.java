@@ -1,10 +1,12 @@
 package com.tracholar.recommend.engine;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tracholar.recommend.Context;
 import com.tracholar.recommend.Item;
 import com.tracholar.recommend.RecEngine;
 import com.tracholar.recommend.User;
+import com.tracholar.recommend.abtest.ABTestKey;
+import com.tracholar.recommend.abtest.ABTestProxy;
+import com.tracholar.recommend.abtest.ABTestable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,50 +14,72 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class SimpleRecEngine implements RecEngine {
-    private String name;
+    abstract protected List<RecallStrategy> getRecalls();
+    abstract protected List<MergeStrategy> getMerges();
+    abstract protected List<Filter> getFilters();
+    abstract protected List<Ranker> getRankers();
+    abstract protected List<ReRanker> getReRankers();
 
-    public SimpleRecEngine(JSONObject conf){
-        //TODO 通过配置文件构造一个推荐引擎
+    abstract protected ABTestProxy getAbTestProxy();
+    abstract protected DetailFetcher getDetailFetcher();
+
+
+    private <T> List<T> filterByABTest(User user, Context ctx, List<T> arr){
+        List<T> strategies = new ArrayList<>();
+        for(T s : arr){
+            if(s instanceof ABTestable){
+                ABTestKey key = ((ABTestable) s).getAbTestKey();
+                if(! getAbTestProxy().match(user, ctx, key)){
+                    continue;
+                }
+
+            }
+            strategies.add(s);
+        }
+        return strategies;
+    }
+    private <T> T getByABTest(User user, Context ctx, List<T> arr){
+        List<T> filtered = filterByABTest(user, ctx, arr);
+        assert filtered.size() == 1;
+        return filtered.get(0);
     }
 
-    public SimpleRecEngine(){
-        name = getClass().getSimpleName();
-    }
-    public String getName(){
-        return name;
-    }
-    abstract List<RecallStrategy> getRecallStrategies(User user, Context ctx);
-    abstract MergeStrategy getMergeStrategy(User user, Context ctx);
 
     private List<RecallResult> doRecall(User user, Context ctx){
         Map<RecallStrategy, List<RecallResult>> results = new HashMap<>();
-        for(RecallStrategy strategy : getRecallStrategies(user, ctx)){
+        for(RecallStrategy strategy : filterByABTest(user, ctx, getRecalls())){
             List<RecallResult> res = strategy.recall(user, ctx);
+            if(res == null) continue;
             results.put(strategy, res);
         }
 
-        MergeStrategy mergeStrategy = getMergeStrategy(user, ctx);
+        MergeStrategy mergeStrategy = getByABTest(user, ctx, getMerges());
         return mergeStrategy.merge(results);
     }
 
-    abstract List<Filter> getFilters(User user, Context ctx);
     private List<RecallResult> doFilter(User user, List<RecallResult> results, Context ctx){
-        for(Filter f : getFilters(user, ctx)){
+        for(Filter f : filterByABTest(user, ctx, getFilters())){
             results = f.filter(user, results, ctx);
         }
         return results;
     }
-    abstract Ranker getRanker(User user, Context ctx);
-    abstract ReRanker getReRanker(User user, Context ctx);
-    abstract List<Item> fetchDetail(List<RankResult> results);
-
 
     public List<Item> recommend(User user, Context ctx){
+        // recall
         List<RecallResult> results = doRecall(user, ctx);
+
+        // filter
         results = doFilter(user, results, ctx);
-        List<RankResult> rankResults = getRanker(user, ctx).rank(user, results, ctx);
-        rankResults = getReRanker(user, ctx).reRank(user, rankResults, ctx);
-        return fetchDetail(rankResults);
+
+        // rank
+        List<RankResult> rankResults = getByABTest(user, ctx, getRankers()).rank(user, results, ctx);
+
+        // re-rank
+        rankResults = getByABTest(user, ctx, getReRankers())
+                .reRank(user, rankResults, ctx);
+
+        // fetch details
+        return getDetailFetcher().fetchDetail(rankResults);
     }
 
 }

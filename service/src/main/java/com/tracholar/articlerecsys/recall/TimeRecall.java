@@ -21,7 +21,7 @@ public class TimeRecall  implements Recall, ABTestable {
     public List<RecallResult> recall(IUser user, IContext ctx){
         List<RecallResult> results = new ArrayList<>();
         Article article = new Article();
-        article.setId(1234567L);
+        article.setId("1234567");
         results.add(article);
 
         return results;

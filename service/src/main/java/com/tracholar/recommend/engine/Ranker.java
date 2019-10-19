@@ -7,6 +7,6 @@ import com.tracholar.recommend.data.RecallResult;
 
 import java.util.List;
 
-public interface Ranker {
-    List<RankResult> rank(IUser user, List<RecallResult> results, IContext ctx);
+public interface Ranker<R extends RecallResult, RR extends RankResult> {
+    List<RR> rank(IUser user, List<R> results, IContext ctx);
 }

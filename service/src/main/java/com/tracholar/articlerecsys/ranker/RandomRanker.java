@@ -7,18 +7,19 @@ import com.tracholar.recommend.data.RankResult;
 import com.tracholar.recommend.engine.Ranker;
 import com.tracholar.recommend.engine.ReRanker;
 import com.tracholar.recommend.data.RecallResult;
+import com.tracholar.recommend.model.SimpleScore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomRanker implements Ranker, ReRanker {
+public class RandomRanker implements Ranker<Article, Article>, ReRanker<Article> {
     @Override
-    public List<RankResult> rank(IUser user, List<RecallResult> results, IContext ctx){
-        List<RankResult> rs = new ArrayList<>();
+    public List<Article> rank(IUser user, List<Article> results, IContext ctx){
+        List<Article> rs = new ArrayList<>();
         for(int i=0; i<results.size(); i++){
-            Article article = (Article) results.get(i);
+            Article article = results.get(i);
             article.setRank(i);
-            article.setScore((float) Math.random());
+            article.setScore(new SimpleScore((float) Math.random()));
             rs.add(article);
         }
 
@@ -26,7 +27,7 @@ public class RandomRanker implements Ranker, ReRanker {
     }
 
     @Override
-    public List<RankResult> reRank(IUser user, List<RankResult> results, IContext ctx){
+    public List<Article> reRank(IUser user, List<Article> results, IContext ctx){
         return results;
     }
 }

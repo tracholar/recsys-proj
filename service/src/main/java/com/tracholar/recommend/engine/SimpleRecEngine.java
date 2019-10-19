@@ -81,7 +81,7 @@ public abstract class SimpleRecEngine implements RecEngine {
                 .reRank(user, rankResults, ctx);
 
         // fetch details
-        return getDetailFetcher().fetchDetail(rankResults);
+        return getDetailFetcher().fetch(rankResults);
     }
 
 }

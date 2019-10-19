@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DemoDetailFetcher implements DetailFetcher<DemoItem> {
     @Override
-    public List<DemoItem> fetchDetail(List<HasId> arr){
+    public List<DemoItem> fetch(List<HasId> arr){
         List<DemoItem> items = new ArrayList<>();
         for(HasId<String> h : arr) {
             DemoItem item = new DemoItem(h.getId(), h.getId() + "@" + System.currentTimeMillis());

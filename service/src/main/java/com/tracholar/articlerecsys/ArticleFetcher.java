@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ArticleFetcher implements DetailFetcher<Article> {
 
-    public List<Article> fetchDetail(List<HasId> arr){
+    public List<Article> fetch(List<HasId> arr){
         List<Article> articles = new ArrayList<>();
         for(HasId s : arr) {
             articles.add(new Article((Long) s.getId(), "文章标题"));

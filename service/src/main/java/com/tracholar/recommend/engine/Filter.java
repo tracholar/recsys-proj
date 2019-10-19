@@ -6,6 +6,6 @@ import com.tracholar.recommend.data.RecallResult;
 
 import java.util.List;
 
-public interface Filter {
-    List<RecallResult> filter(IUser user, List<RecallResult> results, IContext ctx);
+public interface Filter<U extends IUser, C extends IContext, R extends RecallResult> {
+    List<RecallResult> filter(U user, List<R> results, C ctx);
 }

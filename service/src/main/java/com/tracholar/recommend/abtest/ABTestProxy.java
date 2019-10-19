@@ -1,8 +1,8 @@
 package com.tracholar.recommend.abtest;
 
-import com.tracholar.recommend.data.Context;
-import com.tracholar.recommend.data.User;
+import com.tracholar.recommend.data.IContext;
+import com.tracholar.recommend.data.IUser;
 
 public interface ABTestProxy {
-    boolean match(User user, Context ctx, ABTestKey key);
+    boolean match(IUser user, IContext ctx, ABTestKey key);
 }

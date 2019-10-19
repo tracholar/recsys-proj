@@ -1,7 +1,7 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.data.Context;
-import com.tracholar.recommend.data.User;
+import com.tracholar.recommend.data.IContext;
+import com.tracholar.recommend.data.IUser;
 import com.tracholar.recommend.engine.Filter;
 import com.tracholar.recommend.engine.RecallResult;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 public class DemoFilter implements Filter {
     @Override
-    public List<RecallResult> filter(User user,
+    public List<RecallResult> filter(IUser user,
                                      List<RecallResult> results,
-                                     Context ctx){
+                                     IContext ctx){
         if(user.getId().equals("1")){
             return null;
         }

@@ -1,10 +1,10 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.data.Context;
-import com.tracholar.recommend.data.User;
+import com.tracholar.recommend.data.IContext;
+import com.tracholar.recommend.data.IUser;
 
 import java.util.List;
 
 public interface ReRanker {
-    List<RankResult> reRank(User user, List<RankResult> results, Context ctx);
+    List<RankResult> reRank(IUser user, List<RankResult> results, IContext ctx);
 }

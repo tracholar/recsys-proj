@@ -3,7 +3,7 @@ package com.tracholar.recommend.demo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.tracholar.recommend.data.Item;
+import com.tracholar.recommend.data.IItem;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestable;
 import com.tracholar.recommend.engine.*;
@@ -74,7 +74,7 @@ public class DemoSimpleRecEngine extends SimpleRecEngine {
         DemoSimpleRecEngine engine = new DemoSimpleRecEngine();
         DemoUser user = new DemoUser("12", "admin");
         DemoContext ctx = new DemoContext("" + System.currentTimeMillis());
-        List<Item> items = engine.recommend(user, ctx);
+        List<IItem> items = engine.recommend(user, ctx);
 
         System.out.println("traceId:" + ctx.getTraceId());
         System.out.println("user:" + user);

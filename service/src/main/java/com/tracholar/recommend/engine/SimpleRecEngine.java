@@ -1,8 +1,8 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.data.Context;
-import com.tracholar.recommend.data.Item;
-import com.tracholar.recommend.data.User;
+import com.tracholar.recommend.data.IContext;
+import com.tracholar.recommend.data.IItem;
+import com.tracholar.recommend.data.IUser;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;
@@ -23,7 +23,7 @@ public abstract class SimpleRecEngine implements RecEngine {
     abstract protected DetailFetcher getDetailFetcher();
 
 
-    private <T> List<T> filterByABTest(User user, Context ctx, List<T> arr){
+    private <T> List<T> filterByABTest(IUser user, IContext ctx, List<T> arr){
         List<T> strategies = new ArrayList<>();
         for(T s : arr){
             if(s instanceof ABTestable){
@@ -37,14 +37,14 @@ public abstract class SimpleRecEngine implements RecEngine {
         }
         return strategies;
     }
-    private <T> T getByABTest(User user, Context ctx, List<T> arr){
+    private <T> T getByABTest(IUser user, IContext ctx, List<T> arr){
         List<T> filtered = filterByABTest(user, ctx, arr);
         assert filtered.size() == 1;
         return filtered.get(0);
     }
 
 
-    private List<RecallResult> doRecall(User user, Context ctx){
+    private List<RecallResult> doRecall(IUser user, IContext ctx){
         Map<Recall, List<RecallResult>> results = new HashMap<>();
         for(Recall strategy : filterByABTest(user, ctx, getRecalls())){
             List<RecallResult> res = strategy.recall(user, ctx);
@@ -56,14 +56,14 @@ public abstract class SimpleRecEngine implements RecEngine {
         return merge.merge(results);
     }
 
-    private List<RecallResult> doFilter(User user, List<RecallResult> results, Context ctx){
+    private List<RecallResult> doFilter(IUser user, List<RecallResult> results, IContext ctx){
         for(Filter f : filterByABTest(user, ctx, getFilters())){
             results = f.filter(user, results, ctx);
         }
         return results;
     }
 
-    public List<Item> recommend(User user, Context ctx){
+    public List<IItem> recommend(IUser user, IContext ctx){
         // recall
         List<RecallResult> results = doRecall(user, ctx);
 

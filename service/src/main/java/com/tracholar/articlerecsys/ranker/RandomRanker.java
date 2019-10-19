@@ -3,7 +3,6 @@ package com.tracholar.articlerecsys.ranker;
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.recommend.data.IContext;
 import com.tracholar.recommend.data.IUser;
-import com.tracholar.recommend.demo.DemoRankResult;
 import com.tracholar.recommend.engine.RankResult;
 import com.tracholar.recommend.engine.Ranker;
 import com.tracholar.recommend.engine.ReRanker;

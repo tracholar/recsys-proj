@@ -1,8 +1,6 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.data.IContext;
-import com.tracholar.recommend.data.IItem;
-import com.tracholar.recommend.data.IUser;
+import com.tracholar.recommend.data.*;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;

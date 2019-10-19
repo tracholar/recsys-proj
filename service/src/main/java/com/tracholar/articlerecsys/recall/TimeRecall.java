@@ -1,15 +1,23 @@
 package com.tracholar.articlerecsys.recall;
 
 import com.tracholar.articlerecsys.data.Article;
+import com.tracholar.recommend.abtest.ABTestKey;
+import com.tracholar.recommend.abtest.ABTestable;
 import com.tracholar.recommend.data.IContext;
 import com.tracholar.recommend.data.IUser;
 import com.tracholar.recommend.engine.Recall;
-import com.tracholar.recommend.engine.RecallResult;
+import com.tracholar.recommend.data.RecallResult;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRecall  implements Recall {
+@Getter
+@Setter
+public class TimeRecall  implements Recall, ABTestable {
+    private ABTestKey abTestKey;
+
     public List<RecallResult> recall(IUser user, IContext ctx){
         List<RecallResult> results = new ArrayList<>();
         Article article = new Article();

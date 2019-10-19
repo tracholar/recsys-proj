@@ -2,9 +2,9 @@ package com.tracholar.recommend.demo;
 
 import com.tracholar.recommend.data.IContext;
 import com.tracholar.recommend.data.IUser;
-import com.tracholar.recommend.engine.RankResult;
+import com.tracholar.recommend.data.RankResult;
 import com.tracholar.recommend.engine.Ranker;
-import com.tracholar.recommend.engine.RecallResult;
+import com.tracholar.recommend.data.RecallResult;
 
 import java.util.ArrayList;
 import java.util.List;

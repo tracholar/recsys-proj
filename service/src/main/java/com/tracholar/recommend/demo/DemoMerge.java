@@ -1,7 +1,7 @@
 package com.tracholar.recommend.demo;
 
 import com.tracholar.recommend.engine.Merge;
-import com.tracholar.recommend.engine.RecallResult;
+import com.tracholar.recommend.data.RecallResult;
 import com.tracholar.recommend.engine.Recall;
 import lombok.Getter;
 import lombok.Setter;

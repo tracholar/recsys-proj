@@ -15,9 +15,6 @@ public class User extends JsonableData implements IUser<Long> {
     private String deviceId;
     private Set<String> history;
 
-    public User(Long id) {
-        this.id = id;
-    }
     public User(Long id, String deviceId) {
         this.id = id;
         this.deviceId = deviceId;

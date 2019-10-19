@@ -1,5 +1,7 @@
 package com.tracholar.recommend.engine;
 
+import com.tracholar.recommend.data.RecallResult;
+
 import java.util.List;
 import java.util.Map;
 

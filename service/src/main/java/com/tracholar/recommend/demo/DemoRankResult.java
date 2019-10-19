@@ -1,9 +1,8 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.engine.RankResult;
+import com.tracholar.recommend.data.RankResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor

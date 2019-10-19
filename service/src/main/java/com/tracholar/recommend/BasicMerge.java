@@ -2,7 +2,7 @@ package com.tracholar.recommend;
 
 import com.tracholar.recommend.engine.Merge;
 import com.tracholar.recommend.engine.Recall;
-import com.tracholar.recommend.engine.RecallResult;
+import com.tracholar.recommend.data.RecallResult;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,16 @@
 {
   "name" : "文章推荐引擎",
 
-  "abtest" : "com.tracholar.recommend.demo.DemoABTestProxy",
+  "abtest" : "com.tracholar.articlerecsys.ABTest",
 
   "detailFetcher" : "com.tracholar.articlerecsys.ArticleFetcher",
 
   "recalls" : [
     {
       "name": "time-recall",
-      "class": "com.tracholar.articlerecsys.recall.TimeRecall"
+      "class": "com.tracholar.articlerecsys.recall.TimeRecall",
+      "abtestLayerKey" : "1",
+      "abtestFlowKey" : "0,1,2,3,4,5,6,7,8,9"
     }
   ],
   "merges" : [

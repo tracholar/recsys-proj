@@ -4,7 +4,7 @@ import com.tracholar.articlerecsys.data.User;
 import com.tracholar.recommend.data.IContext;
 import com.tracholar.recommend.data.IUser;
 import com.tracholar.recommend.engine.Filter;
-import com.tracholar.recommend.engine.RecallResult;
+import com.tracholar.recommend.data.RecallResult;
 
 import java.util.ArrayList;
 import java.util.List;

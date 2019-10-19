@@ -1,6 +1,6 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.engine.RecallResult;
+import com.tracholar.recommend.data.RecallResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

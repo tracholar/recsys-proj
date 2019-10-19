@@ -1,8 +1,8 @@
 package com.tracholar.recommend.data;
 
-import com.tracholar.recommend.data.HasId;
+import com.tracholar.recommend.model.Score;
 
 public interface RankResult<ID> extends HasId<ID> {
-    float getScore();
+    Score getScore();
     int getRank();
 }

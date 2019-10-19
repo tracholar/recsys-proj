@@ -5,5 +5,5 @@ import com.tracholar.recommend.feature.Feature;
 
 import java.util.List;
 
-public interface UserFeature extends IUser, HasFeatures {
+public interface UserFeature<ID> extends IUser<ID>, HasFeatures {
 }

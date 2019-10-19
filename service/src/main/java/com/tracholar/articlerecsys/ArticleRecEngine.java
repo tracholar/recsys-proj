@@ -42,7 +42,7 @@ public class ArticleRecEngine {
         ArticleRecEngine engine = new ArticleRecEngine();
         System.out.println(engine);
 
-        User user = new User(123L, "dafad-fad-f-asdf-a-sd");
+        User user = new User("123", "dafad-fad-f-asdf-a-sd");
 
         System.out.println(engine.recommend(user, new ReqContext("ADF-HJKH")));
     }

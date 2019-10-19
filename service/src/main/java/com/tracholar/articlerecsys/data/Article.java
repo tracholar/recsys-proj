@@ -5,15 +5,18 @@ import com.tracholar.recommend.data.IItem;
 import com.tracholar.recommend.data.JsonableData;
 import com.tracholar.recommend.data.RankResult;
 import com.tracholar.recommend.data.RecallResult;
+import com.tracholar.recommend.model.PredictResult;
+import com.tracholar.recommend.model.Score;
+import com.tracholar.recommend.model.SimpleScore;
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class Article extends JsonableData
-        implements IItem<Long>, RecallResult<Long>, RankResult<Long> {
+        implements IItem<String>, RecallResult<String>, RankResult<String>, PredictResult<String> {
     @JSONField
-    private Long id;
+    private String id;
     @JSONField
     private String title;
     @JSONField
@@ -23,12 +26,12 @@ public class Article extends JsonableData
     @JSONField
     private String author;
 
-    public Article(Long id, String title) {
+    public Article(String id, String title) {
         this.id = id;
         this.title = title;
     }
     @JSONField
-    private float score;
+    private SimpleScore score;
     @JSONField
     private int rank;
 

@@ -7,7 +7,7 @@ import com.tracholar.recommend.engine.ReRanker;
 
 import java.util.List;
 
-public class DemoReRanker implements ReRanker {
+public class DemoReRanker implements ReRanker<RankResult> {
     @Override
     public List<RankResult> reRank(IUser user, List<RankResult> results, IContext ctx){
         return results;

@@ -8,6 +8,6 @@ import java.util.List;
 /**
  * 模型是对机器学习模型和策略模型的统一抽象
  */
-public interface Model extends HasId<String> {
-    List<PredictResult> predict(List<List<Feature>> features);
+public interface Model<P extends PredictResult> extends HasId<String> {
+    List<P> predict(List<List<Feature>> features);
 }

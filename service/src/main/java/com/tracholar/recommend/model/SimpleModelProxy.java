@@ -10,8 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class SimpleModelProxy implements ModelProxy {
-    protected abstract Model getModel();
+public class SimpleModelProxy<P extends PredictResult>
+        implements ModelProxy<P> {
+    private Model<P> model;
+
+    public SimpleModelProxy(Model<P> model){
+        this.model = model;
+    }
 
     private List<List<Feature>> featureExtract(UserFeature u, List<ItemFeature> i, ContextFeature c){
         List<List<Feature>> feats = new LinkedList<>();
@@ -26,8 +31,7 @@ public abstract class SimpleModelProxy implements ModelProxy {
 
         return feats;
     }
-    public List<PredictResult> predict(UserFeature u, List<ItemFeature> i, ContextFeature c){
-        Model model = getModel();
+    public List<P> predict(UserFeature u, List<ItemFeature> i, ContextFeature c){
         List<List<Feature>> features = featureExtract(u, i, c);
         return model.predict(features);
     }

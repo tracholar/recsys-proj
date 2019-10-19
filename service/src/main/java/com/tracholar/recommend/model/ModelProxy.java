@@ -10,6 +10,6 @@ import java.util.List;
  * ModelProxy 接受一个用户多个item 进行预测。
  * 因为Model只能一次预测一条样本。
  */
-public interface ModelProxy {
-    List<PredictResult> predict(UserFeature u, List<ItemFeature> i, ContextFeature c);
+public interface ModelProxy<P extends PredictResult> {
+    List<P> predict(UserFeature u, List<ItemFeature> i, ContextFeature c);
 }

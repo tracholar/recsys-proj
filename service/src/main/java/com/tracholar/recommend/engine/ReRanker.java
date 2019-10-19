@@ -6,6 +6,6 @@ import com.tracholar.recommend.data.RankResult;
 
 import java.util.List;
 
-public interface ReRanker {
-    List<RankResult> reRank(IUser user, List<RankResult> results, IContext ctx);
+public interface ReRanker<R extends RankResult> {
+    List<R> reRank(IUser user, List<R> results, IContext ctx);
 }

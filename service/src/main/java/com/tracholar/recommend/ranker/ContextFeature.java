@@ -5,5 +5,5 @@ import com.tracholar.recommend.feature.Feature;
 
 import java.util.List;
 
-public interface ContextFeature extends IContext, HasFeatures {
+public interface ContextFeature<ID> extends IContext<ID>, HasFeatures {
 }

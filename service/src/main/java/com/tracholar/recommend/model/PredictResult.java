@@ -4,9 +4,6 @@ import com.tracholar.recommend.data.HasId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
-public class PredictResult implements HasId<String> {
-    private String id;
-    private float score;
+public interface PredictResult extends HasId<String> {
+    float getScore();
 }

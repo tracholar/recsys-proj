@@ -17,10 +17,14 @@ public class ArticleFeatureFeatcher implements
         ItemFeatureFetcher<Article>,
         ContextFeatureFetcher<ReqContext> {
     public UserFeature fetch(User user){
-        MyFeats feats = new MyFeats(user.getId(), new LinkedList<>());
+        List<Feature> f = new LinkedList<>();
 
         // 这里造个简单特征，正常应该是查询外部存储来获取用户特征
-        feats.getFeatures().add(new CatFeature("uid", user.getId()));
+        f.add(new CatFeature("uid", user.getId()));
+
+        MyFeats feats = new MyFeats(user.getId(), f);
+
+
         return feats;
     }
     public List<ItemFeature> fetch(List<Article> arr){
@@ -28,11 +32,11 @@ public class ArticleFeatureFeatcher implements
 
         // 这里造个简单特征，正常应该是查询外部存储来获取特征
         for(Article a : arr) {
-            MyFeats feats = new MyFeats(a.getId(), new LinkedList<>());
-
-            List<Feature> f = feats.getFeatures();
-            f.add(new CatFeature("id", a.getId()));
+            List<Feature> f = new LinkedList<>();
+            f.add(new CatFeature("article_id", a.getId()));
             f.add(new CatFeature("author", a.getAuthor()));
+
+            MyFeats feats = new MyFeats(a.getId(), f);
 
             featLists.add(feats);
         }

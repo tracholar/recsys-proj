@@ -9,11 +9,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ReqContext extends JsonableData implements IContext<String> {
     private String id;
-    private float lat;
-    private float lng;
-    private int cityId;
-    private long seconds;
-    private int weekday;
+    private Float lat;
+    private Float lng;
+    private Integer cityId;
+    private Long seconds;
+    private Integer weekday;
 
     public ReqContext(String id) {
         this.id = id;

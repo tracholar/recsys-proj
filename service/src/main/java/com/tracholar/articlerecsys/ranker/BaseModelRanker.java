@@ -1,13 +1,9 @@
 package com.tracholar.articlerecsys.ranker;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.articlerecsys.feature.ArticleFeatureFeatcher;
-import com.tracholar.articlerecsys.model.RandomModel;
-import com.tracholar.recommend.data.RankResult;
-import com.tracholar.recommend.model.ModelProxy;
-import com.tracholar.recommend.model.PredictResult;
-import com.tracholar.recommend.model.SimpleModelProxy;
 import com.tracholar.recommend.ranker.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,7 +27,7 @@ public abstract class BaseModelRanker
         data.put("ctx", c);
 
         // 打日志
-        logger.info(data.toJSONString());
+        logger.info("{}", data);
     }
 
     protected List<Article> createResult(List<Article> preds){

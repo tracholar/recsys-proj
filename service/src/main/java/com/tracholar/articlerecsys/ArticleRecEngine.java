@@ -40,7 +40,6 @@ public class ArticleRecEngine {
 
     public static void main(String[] args) throws Exception{
         ArticleRecEngine engine = new ArticleRecEngine();
-        System.out.println(engine);
 
         User user = new User("123", "dafad-fad-f-asdf-a-sd");
 

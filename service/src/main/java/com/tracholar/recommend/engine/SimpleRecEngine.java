@@ -4,6 +4,8 @@ import com.tracholar.recommend.data.*;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ public abstract class SimpleRecEngine implements RecEngine {
 
     abstract protected ABTestProxy getAbTestProxy();
     abstract protected DetailFetcher getDetailFetcher();
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
 
     private <T> List<T> filterByABTest(IUser user, IContext ctx, List<T> arr){
@@ -50,9 +54,20 @@ public abstract class SimpleRecEngine implements RecEngine {
     private List<RecallResult> doRecall(IUser user, IContext ctx){
         Map<Recall, List<RecallResult>> results = new HashMap<>();
         for(Recall strategy : filterByABTest(user, ctx, getRecalls())){
-            List<RecallResult> res = strategy.recall(user, ctx);
-            if(res == null) continue;
-            results.put(strategy, res);
+            logger.info("Match recall {}", strategy.getClass().getName());
+
+            try {
+                List<RecallResult> res = strategy.recall(user, ctx);
+                if (res == null) {
+                    logger.info("Strategy {} recall null", strategy.getClass().getName());
+                    continue;
+                }
+                results.put(strategy, res);
+
+                logger.info("Strategy {} recall #{} items.", strategy.getClass().getName(), res.size());
+            }catch (Exception e){
+                logger.error("Recall strategy {} failed. {}", strategy.getClass().getName(), e);
+            }
         }
 
         Merge merge = getByABTest(user, ctx, getMerges());
@@ -61,25 +76,38 @@ public abstract class SimpleRecEngine implements RecEngine {
 
     private List<RecallResult> doFilter(IUser user, List<RecallResult> results, IContext ctx){
         for(Filter f : filterByABTest(user, ctx, getFilters())){
+            logger.info("Match filter {}", f.getClass().getName());
+            int begine = results.size();
+
             results = f.filter(user, results, ctx);
+
+            logger.info("{} filter #{} items.", f.getClass().getName(), begine - results.size() );
         }
         return results;
     }
 
     public List<IItem> recommend(IUser user, IContext ctx){
+        logger.debug("user={}, ctx={}", user, ctx);
+
         // recall
         List<RecallResult> results = doRecall(user, ctx);
+        logger.info("召回 #{} items.", results.size());
 
         // filter
         results = doFilter(user, results, ctx);
+        logger.info("过滤后剩下 #{} items.", results.size());
 
         // rank
-        List<RankResult> rankResults = getByABTest(user, ctx, getRankers()).rank(user, results, ctx);
+        Ranker ranker = getByABTest(user, ctx, getRankers());
+        logger.info("Match ranker {}", ranker.getClass().getName());
+        List<RankResult> rankResults = ranker.rank(user, results, ctx);
+        logger.info("排序后剩下 #{} items.", rankResults.size());
 
         // re-rank
         rankResults = getByABTest(user, ctx, getReRankers())
                 .reRank(user, rankResults, ctx);
 
+        logger.info("Re-ranker 后剩下 #{} items.", rankResults.size());
         // fetch details
         return getDetailFetcher().fetch(rankResults);
     }

@@ -31,7 +31,7 @@
   "rankers" : [
     {
       "name" : "basic ranker",
-      "class" : "com.tracholar.articlerecsys.ranker.RandomRanker"
+      "class" : "com.tracholar.articlerecsys.ranker.RandomModelRanker"
     }
   ],
   "reRankers" : [

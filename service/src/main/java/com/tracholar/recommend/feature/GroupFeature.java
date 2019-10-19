@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Getter
 @AllArgsConstructor
-public class GroupFeature<T> extends Feature<List<Feature>> {
+public class GroupFeature extends Feature<List<Feature>> {
     @JSONField
     private String id;
     @JSONField

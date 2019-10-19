@@ -6,4 +6,6 @@ target/
 *.dat
 *.zip
 .DS_Store
+log/
+*.log
 

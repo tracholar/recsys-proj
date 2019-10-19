@@ -11,6 +11,8 @@ import com.tracholar.recommend.engine.config.RecEngineConfig;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -33,7 +35,10 @@ public class ConfigurableSimpleRecEngine extends SimpleRecEngine {
     private List<Ranker> rankers = new ArrayList<>();
     private List<ReRanker> reRankers = new ArrayList<>();
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     public void init(RecEngineConfig conf) throws EngineInitialException{
+        logger.debug("Load rec-engine with config: {}", conf);
         try {
             //通过配置文件构造一个推荐引擎
             name = conf.getName();

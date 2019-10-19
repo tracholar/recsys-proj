@@ -24,6 +24,7 @@ public class TimeRecall  implements Recall<User, ReqContext>, ABTestable {
         List<RecallResult> results = new ArrayList<>();
         Article article = new Article();
         article.setId("1234567");
+        article.setAuthor("tracholar");
         results.add(article);
 
         return results;

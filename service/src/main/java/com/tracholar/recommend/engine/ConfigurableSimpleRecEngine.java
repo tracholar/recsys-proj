@@ -14,8 +14,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author tracholar.github.io
+ * ConfigurableSimpleRecEngine 抽象了通过配置生成推荐引擎所需要的模块。
+ * 已经是一个独立的推荐引擎了！！
+ */
 @Getter(AccessLevel.PROTECTED)
-public abstract class ConfigurableSimpleRecEngine extends SimpleRecEngine {
+public class ConfigurableSimpleRecEngine extends SimpleRecEngine {
     @Getter
     private String name;
     private ABTestProxy abTestProxy;

@@ -10,7 +10,7 @@ public class DemoDetailFetcher implements DetailFetcher<DemoItem> {
     @Override
     public List<DemoItem> fetchDetail(List<HasId> arr){
         List<DemoItem> items = new ArrayList<>();
-        for(HasId h : arr) {
+        for(HasId<String> h : arr) {
             DemoItem item = new DemoItem(h.getId(), h.getId() + "@" + System.currentTimeMillis());
             items.add(item);
         }

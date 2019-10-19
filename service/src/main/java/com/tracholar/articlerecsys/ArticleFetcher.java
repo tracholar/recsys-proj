@@ -12,7 +12,7 @@ public class ArticleFetcher implements DetailFetcher<Article> {
     public List<Article> fetchDetail(List<HasId> arr){
         List<Article> articles = new ArrayList<>();
         for(HasId s : arr) {
-            articles.add(new Article(s.getId(), "文章标题", "内容", "",""));
+            articles.add(new Article((Long) s.getId(), "文章标题"));
         }
 
         return articles;

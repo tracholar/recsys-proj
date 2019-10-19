@@ -27,13 +27,13 @@
   "rankers" : [
     {
       "name" : "basic ranker",
-      "class" : "com.tracholar.recommend.demo.DemoRanker"
+      "class" : "com.tracholar.articlerecsys.ranker.RandomRanker"
     }
   ],
   "reRankers" : [
     {
       "name" : "basic re-ranker",
-      "class" : "com.tracholar.recommend.demo.DemoReRanker"
+      "class" : "com.tracholar.articlerecsys.ranker.RandomRanker"
     }
   ]
 }

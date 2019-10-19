@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DemoUser implements IUser {
+public class DemoUser implements IUser<String> {
     @JSONField
     private String id;
     @JSONField

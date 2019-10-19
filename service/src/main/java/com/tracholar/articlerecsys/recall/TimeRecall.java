@@ -13,7 +13,7 @@ public class TimeRecall  implements Recall {
     public List<RecallResult> recall(IUser user, IContext ctx){
         List<RecallResult> results = new ArrayList<>();
         Article article = new Article();
-        article.setId("1234567");
+        article.setId(1234567L);
         results.add(article);
 
         return results;

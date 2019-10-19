@@ -10,15 +10,15 @@ import java.util.Set;
 
 @Getter
 @AllArgsConstructor
-public class User extends JsonableData implements IUser {
-    private String id;
+public class User extends JsonableData implements IUser<Long> {
+    private Long id;
     private String deviceId;
     private Set<String> history;
 
-    public User(String id) {
+    public User(Long id) {
         this.id = id;
     }
-    public User(String id, String deviceId) {
+    public User(Long id, String deviceId) {
         this.id = id;
         this.deviceId = deviceId;
     }

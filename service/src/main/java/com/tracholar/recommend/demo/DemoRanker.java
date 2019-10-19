@@ -14,7 +14,7 @@ public class DemoRanker implements Ranker {
     public List<RankResult> rank(IUser user, List<RecallResult> results, IContext ctx){
         List<RankResult> rs = new ArrayList<>();
         for(int i=0; i<results.size(); i++){
-            rs.add(new DemoRankResult(results.get(i).getId(), 0.1f, i));
+            rs.add(new DemoRankResult((String) results.get(i).getId(), 0.1f, i));
         }
 
         return rs;

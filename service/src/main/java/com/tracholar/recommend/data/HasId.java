@@ -1,5 +1,5 @@
 package com.tracholar.recommend.data;
 
-public interface HasId {
-    String getId();
+public interface HasId<T> {
+    T getId();
 }

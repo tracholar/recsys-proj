@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
-public class DemoRankResult implements RankResult {
+public class DemoRankResult implements RankResult<String> {
     private String id;
     private float score;
     private int rank;

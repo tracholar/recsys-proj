@@ -27,7 +27,7 @@ public class ArticleRecEngine extends ConfigurableSimpleRecEngine{
         RecEngine engine = new ArticleRecEngine();
         System.out.println(engine);
 
-        User user = new User("123");
+        User user = new User(123L);
 
         System.out.println(engine.recommend(user, new ReqContext("ADF-HJKH")));
     }

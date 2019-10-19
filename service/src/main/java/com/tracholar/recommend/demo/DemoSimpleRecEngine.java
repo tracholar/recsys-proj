@@ -76,7 +76,7 @@ public class DemoSimpleRecEngine extends SimpleRecEngine {
         DemoContext ctx = new DemoContext("" + System.currentTimeMillis());
         List<IItem> items = engine.recommend(user, ctx);
 
-        System.out.println("traceId:" + ctx.getTraceId());
+        System.out.println("traceId:" + ctx.getId());
         System.out.println("user:" + user);
         System.out.println("items:" + items);
     }

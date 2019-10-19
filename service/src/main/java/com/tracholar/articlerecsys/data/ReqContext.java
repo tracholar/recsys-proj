@@ -7,6 +7,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ReqContext extends JsonableData implements IContext {
-    private String traceId;
+public class ReqContext extends JsonableData implements IContext<String> {
+    private String id;
 }

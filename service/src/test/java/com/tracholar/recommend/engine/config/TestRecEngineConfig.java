@@ -1,6 +1,7 @@
 package com.tracholar.recommend.engine.config;
 
 import com.alibaba.fastjson.JSON;
+import com.tracholar.recommend.feature.MurmurHash;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -12,5 +13,12 @@ public class TestRecEngineConfig {
         String json = IOUtils.toString(getClass().getResourceAsStream("/engine.json"), "UTF-8");
         RecEngineConfig config = JSON.parseObject(json, RecEngineConfig.class);
         System.out.println(config);
+    }
+
+    @Test
+    public void testHash() {
+        MurmurHash hash = new MurmurHash();
+        long v = hash.hash("fasdffdsaf");
+        System.out.println(v);
     }
 }

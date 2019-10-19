@@ -7,4 +7,8 @@ public abstract class JsonableData {
     public String toString() {
         return JSON.toJSONString(this);
     }
+
+    public String toJson() {
+        return JSON.toJSONString(this);
+    }
 }

@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;
+import com.tracholar.recommend.engine.config.ComponentConfig;
+import com.tracholar.recommend.engine.config.RecEngineConfig;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
@@ -31,43 +33,42 @@ public class ConfigurableSimpleRecEngine extends SimpleRecEngine {
     private List<Ranker> rankers = new ArrayList<>();
     private List<ReRanker> reRankers = new ArrayList<>();
 
-    public void init(InputStream is) throws Exception{
-        //通过配置文件构造一个推荐引擎
-        String confString = IOUtils.toString(is, "UTF-8");
-        JSONObject conf = JSON.parseObject(confString);
+    public void init(RecEngineConfig conf) throws EngineInitialException{
+        try {
+            //通过配置文件构造一个推荐引擎
+            name = conf.getName();
 
-        name = conf.getString("name");
+            //abtest
+            abTestProxy = (ABTestProxy) Class.forName(conf.getAbtest()).newInstance();
+            detailFetcher = (DetailFetcher) Class.forName(conf.getDetailFetcher()).newInstance();
 
-        //abtest
-        abTestProxy = (ABTestProxy)Class.forName(conf.getString("abtest")).newInstance();
-        detailFetcher = (DetailFetcher)Class.forName(conf.getString("detailFetcher")).newInstance();
+            //recall
+            loadComponents(recalls, conf.getRecalls());
 
-        //recall
-        loadComponents(recalls, conf.getJSONArray("recalls"));
+            //filters
+            loadComponents(filters, conf.getFilters());
 
-        //filters
-        loadComponents(filters, conf.getJSONArray("filters"));
+            //merges
+            loadComponents(merges, conf.getMerges());
 
-        //merges
-        loadComponents(merges, conf.getJSONArray("merges"));
+            //rankers
+            loadComponents(rankers, conf.getRankers());
 
-        //rankers
-        loadComponents(rankers, conf.getJSONArray("rankers"));
-
-        //re-rankers
-        loadComponents(reRankers, conf.getJSONArray("reRankers"));
-
-
+            //re-rankers
+            loadComponents(reRankers, conf.getReRankers());
+        }catch (Exception e){
+            throw new EngineInitialException(e);
+        }
     }
 
-    private <T> void loadComponents(List<T> arr, JSONArray compConfs)
+    private <T> void loadComponents(List<T> arr, List<ComponentConfig> compConfs)
             throws Exception{
         for(int i=0; i<compConfs.size(); i++) {
-            JSONObject c = compConfs.getJSONObject(i);
-            T strategy = (T) Class.forName(c.getString("class")).newInstance();
+            ComponentConfig c = compConfs.get(i);
+            T strategy = (T) Class.forName(c.getClassName()).newInstance();
 
-            if(strategy instanceof ABTestable) {
-                ABTestKey key = new ABTestKey(c.getString("abtestLayerKey"), c.getString("abtestFlowKey"));
+            if(strategy instanceof ABTestable && c.getAbTestKey() != null) {
+                ABTestKey key = c.getAbTestKey();
                 ((ABTestable) strategy).setAbTestKey(key);
             }
             arr.add(strategy);

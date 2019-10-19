@@ -12,6 +12,5 @@ import java.util.List;
  * getName这个接口都不见得是必须的，可以取去掉。
  */
 public interface RecEngine {
-    String getName();
     List<IItem> recommend(IUser user, IContext ctx);
 }

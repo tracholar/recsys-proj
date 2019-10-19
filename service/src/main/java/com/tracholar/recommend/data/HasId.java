@@ -1,4 +1,4 @@
-package com.tracholar.recommend;
+package com.tracholar.recommend.data;
 
 public interface HasId {
     String getId();

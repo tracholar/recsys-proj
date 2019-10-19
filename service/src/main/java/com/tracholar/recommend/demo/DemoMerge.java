@@ -1,10 +1,8 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.abtest.ABTestKey;
-import com.tracholar.recommend.abtest.ABTestable;
-import com.tracholar.recommend.engine.MergeStrategy;
+import com.tracholar.recommend.engine.Merge;
 import com.tracholar.recommend.engine.RecallResult;
-import com.tracholar.recommend.engine.RecallStrategy;
+import com.tracholar.recommend.engine.Recall;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +12,11 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class DemoMergeStrategy implements MergeStrategy {
+public class DemoMerge implements Merge {
 
     // 简单合并
     @Override
-    public List<RecallResult> merge(Map<RecallStrategy, List<RecallResult>> results){
+    public List<RecallResult> merge(Map<Recall, List<RecallResult>> results){
         List<RecallResult> mergedList = new ArrayList<>();
         for(List<RecallResult> r : results.values()) {
             mergedList.addAll(r);

@@ -1,6 +1,6 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.HasId;
+import com.tracholar.recommend.data.HasId;
 
 import java.util.List;
 

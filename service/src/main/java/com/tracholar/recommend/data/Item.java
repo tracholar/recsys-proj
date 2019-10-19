@@ -1,4 +1,4 @@
-package com.tracholar.recommend;
+package com.tracholar.recommend.data;
 
 import java.io.Serializable;
 

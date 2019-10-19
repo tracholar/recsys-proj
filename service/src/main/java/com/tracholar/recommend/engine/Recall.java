@@ -1,10 +1,10 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.Context;
-import com.tracholar.recommend.User;
+import com.tracholar.recommend.data.Context;
+import com.tracholar.recommend.data.User;
 
 import java.util.List;
 
-public interface RecallStrategy {
+public interface Recall {
     List<RecallResult> recall(User user, Context ctx);
 }

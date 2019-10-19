@@ -1,11 +1,11 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.Context;
-import com.tracholar.recommend.User;
+import com.tracholar.recommend.data.Context;
+import com.tracholar.recommend.data.User;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestable;
 import com.tracholar.recommend.engine.RecallResult;
-import com.tracholar.recommend.engine.RecallStrategy;
+import com.tracholar.recommend.engine.Recall;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class DemoRecallStrategy implements RecallStrategy, ABTestable {
+public class DemoRecall implements Recall, ABTestable {
     private ABTestKey abTestKey;
 
     @Override

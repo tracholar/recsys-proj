@@ -1,7 +1,7 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.Context;
-import com.tracholar.recommend.User;
+import com.tracholar.recommend.data.Context;
+import com.tracholar.recommend.data.User;
 import com.tracholar.recommend.engine.RankResult;
 import com.tracholar.recommend.engine.Ranker;
 import com.tracholar.recommend.engine.RecallResult;

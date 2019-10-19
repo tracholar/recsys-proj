@@ -1,6 +1,6 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.HasId;
+import com.tracholar.recommend.data.HasId;
 import com.tracholar.recommend.engine.DetailFetcher;
 
 import java.util.ArrayList;

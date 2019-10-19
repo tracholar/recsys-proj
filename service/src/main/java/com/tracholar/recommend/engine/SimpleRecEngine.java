@@ -1,9 +1,8 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.Context;
-import com.tracholar.recommend.Item;
-import com.tracholar.recommend.RecEngine;
-import com.tracholar.recommend.User;
+import com.tracholar.recommend.data.Context;
+import com.tracholar.recommend.data.Item;
+import com.tracholar.recommend.data.User;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;
@@ -14,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class SimpleRecEngine implements RecEngine {
-    abstract protected List<RecallStrategy> getRecalls();
-    abstract protected List<MergeStrategy> getMerges();
+    abstract protected List<Recall> getRecalls();
+    abstract protected List<Merge> getMerges();
     abstract protected List<Filter> getFilters();
     abstract protected List<Ranker> getRankers();
     abstract protected List<ReRanker> getReRankers();
@@ -46,15 +45,15 @@ public abstract class SimpleRecEngine implements RecEngine {
 
 
     private List<RecallResult> doRecall(User user, Context ctx){
-        Map<RecallStrategy, List<RecallResult>> results = new HashMap<>();
-        for(RecallStrategy strategy : filterByABTest(user, ctx, getRecalls())){
+        Map<Recall, List<RecallResult>> results = new HashMap<>();
+        for(Recall strategy : filterByABTest(user, ctx, getRecalls())){
             List<RecallResult> res = strategy.recall(user, ctx);
             if(res == null) continue;
             results.put(strategy, res);
         }
 
-        MergeStrategy mergeStrategy = getByABTest(user, ctx, getMerges());
-        return mergeStrategy.merge(results);
+        Merge merge = getByABTest(user, ctx, getMerges());
+        return merge.merge(results);
     }
 
     private List<RecallResult> doFilter(User user, List<RecallResult> results, Context ctx){

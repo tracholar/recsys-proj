@@ -1,6 +1,6 @@
 package com.tracholar.recommend.demo;
 
-import com.tracholar.recommend.Context;
+import com.tracholar.recommend.data.Context;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

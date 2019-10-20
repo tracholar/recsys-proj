@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * @Author: tracholar.github.io
  * 从外部来看，推荐引擎就是传入1个用户和一个上下文信息，你给我返回一个item的推荐列表。
- * getName这个接口都不见得是必须的，可以取去掉。
  */
-public interface RecEngine {
-    List<IItem> recommend(IUser user, IContext ctx);
+public interface RecEngine<U extends IUser, I extends IItem, C extends IContext> {
+    List<I> recommend(U user, C ctx);
 }

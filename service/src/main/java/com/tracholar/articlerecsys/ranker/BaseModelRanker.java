@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Getter(AccessLevel.PROTECTED)
 public abstract class BaseModelRanker
-        extends ModelRanker<Article, Article, Article> {
+        extends ModelRanker<Article, Article, Article, Article> {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     protected void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c){
@@ -30,8 +30,13 @@ public abstract class BaseModelRanker
         logger.info("{}", data);
     }
 
-    protected List<Article> createResult(List<Article> preds){
-        List<Article> results = preds.stream()
+    @Override
+    protected List<Article> createResult(List<Article> preds, List<Article> articles){
+        // 设置得分
+        for(int i = 0; i<articles.size(); i++){
+            articles.get(i).setScore(preds.get(i).getScore());
+        }
+        List<Article> results = articles.stream()
                 .sorted(new Comparator<Article>() {
             @Override
             public int compare(Article o1, Article o2) {

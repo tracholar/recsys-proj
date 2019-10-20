@@ -25,6 +25,8 @@ public class ABTest implements ABTestProxy {
     @Override
     public boolean match(IUser user, IContext ctx, ABTestKey key){
         // all match
+        if(key == null) return true;// 如果没有设置， 则全部匹配
+
         String bucketId = getBucketId((User) user, key.getLayerKey());
         List<String> flow = Arrays.asList(key.getFlowKey().split(","));
         return flow.contains(bucketId);

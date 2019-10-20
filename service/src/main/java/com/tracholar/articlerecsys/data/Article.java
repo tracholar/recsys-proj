@@ -6,7 +6,6 @@ import com.tracholar.recommend.data.JsonableData;
 import com.tracholar.recommend.data.RankResult;
 import com.tracholar.recommend.data.RecallResult;
 import com.tracholar.recommend.model.PredictResult;
-import com.tracholar.recommend.model.Score;
 import com.tracholar.recommend.model.SimpleScore;
 import lombok.*;
 

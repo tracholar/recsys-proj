@@ -1,20 +1,19 @@
 package com.tracholar.recommend.model;
 
+import com.tracholar.recommend.data.HasScore;
 import com.tracholar.recommend.feature.Feature;
 import com.tracholar.recommend.ranker.ContextFeature;
 import com.tracholar.recommend.ranker.ItemFeature;
 import com.tracholar.recommend.ranker.UserFeature;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-public class SimpleModelProxy<P extends PredictResult>
-        implements ModelProxy<P> {
-    private Model<P> model;
+public class SimpleModelProxy<S extends HasScore>
+        implements ModelProxy<S> {
+    private Model<S> model;
 
-    public SimpleModelProxy(Model<P> model){
+    public SimpleModelProxy(Model<S> model){
         this.model = model;
     }
 
@@ -31,8 +30,12 @@ public class SimpleModelProxy<P extends PredictResult>
 
         return feats;
     }
-    public List<P> predict(UserFeature u, List<ItemFeature> i, ContextFeature c){
+    public List<S> predict(UserFeature u, List<ItemFeature> i, ContextFeature c){
         List<List<Feature>> features = featureExtract(u, i, c);
-        return model.predict(features);
+        List<S> preds = model.predict(features);
+
+        assert preds.size() == i.size();
+
+        return preds;
     }
 }

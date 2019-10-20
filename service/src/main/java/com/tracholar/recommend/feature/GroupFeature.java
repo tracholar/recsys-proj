@@ -32,42 +32,44 @@ public class GroupFeature extends Feature<List<Feature>> {
      * 将id作为fieldId
      * @return
      */
-    public SparseVector toGroupSparseVector() {
+    public SparseVector toGroupSparseVector(int m) {
         SparseVector vector = new SparseVector();
         int fieldId = 0;
         try{
             fieldId = Integer.parseInt(id);
         }catch (NumberFormatException e){
-            fieldId = Utils.getFid(id);
+            fieldId = Hash.hash(id);
         }
         for(Feature f : value) {
             Map<String, Float> fmap = f.flatten();
             for(String k : fmap.keySet()){
-                vector.put(Utils.getFid(fieldId, k), fmap.get(k));
+                long idx = fieldId;
+                idx <<= m;
+                idx += Hash.hash(k) & (1L << m - 1L); // TODO 检查下正确性
+                vector.put(idx, fmap.get(k));
             }
         }
         return vector;
     }
 
-    public String toLibFFMFormat(){
+    public String toLibFFMFormat() {
+        return toLibFFMFormat(1L<<32);
+    }
+    public String toLibFFMFormat(long m){
         StringBuffer sb = new StringBuffer();
         int fieldId = 0;
         try{
             fieldId = Integer.parseInt(id);
         }catch (NumberFormatException e){
-            fieldId = Utils.getFid(id);
+            fieldId = Hash.hash(id);
         }
         for(Feature f : value) {
             Map<String, Float> fmap = f.flatten();
             for(String k : fmap.keySet()){
                 if(sb.length() > 0) sb.append(" ");
-                sb.append(fieldId + ":" + Utils.getFid(fieldId, k) + ":" + fmap.get(k));
+                sb.append(fieldId + ":" + (Hash.hash(k) % m) + ":" + fmap.get(k));
             }
         }
         return sb.toString();
-    }
-
-    public GroupFeature toGroupFeature(){
-        return this;
     }
 }

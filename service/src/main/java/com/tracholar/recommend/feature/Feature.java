@@ -17,10 +17,10 @@ public abstract class Feature<V>  extends JsonableData
     public abstract Map<String, Float> flatten();
 
     public SparseVector toSparseVector() {
-        return toSparseVector(1<<32);
+        return toSparseVector(1L<<32);
     }
 
-    public SparseVector toSparseVector(int m) {
+    public SparseVector toSparseVector(long m) {
         SparseVector vector = new SparseVector();
         Map<String, Float> fv = flatten();
         for(String k : fv.keySet()) {
@@ -30,6 +30,9 @@ public abstract class Feature<V>  extends JsonableData
         return vector;
     }
 
+    public String toLibsvmFormat(int m) {
+        return toSparseVector(m).toLibsvm();
+    }
     public String toLibsvmFormat(){
         return toSparseVector().toLibsvm();
     }

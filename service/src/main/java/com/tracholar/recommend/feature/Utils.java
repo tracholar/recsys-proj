@@ -8,24 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Utils {
-    private static int m = 32;
-    public static int getFid(String id) {
-        int k = Hash.hash(id);
-        return k;
-    }
-    public static long getFid(int fid, String id){
-        long idx = fid;
-        idx <<= m;
-        idx += getFid(id);
-        return idx;
-    }
-    public static int getFieldId(long idx) {
-        return (int)(idx >> m);
-    }
-    public static int getId(long idx) {
-        return (int) ((idx << m) >> m);
-    }
-
     public Feature fromJson(String json, Class cls) {
         return (Feature)JSON.parseObject(json, cls);
     }

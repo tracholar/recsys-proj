@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -23,5 +25,12 @@ public class ListFeature<T> extends Feature<List<T>> {
             map.put(id + ":" + v, 1.0f);
         }
         return map;
+    }
+
+    public GroupFeature toGroupFeature(){
+        List<Feature> fs = value.stream()
+                .map(e -> new ScalarFeature(e.toString(), 1.0f))
+                .collect(Collectors.toList());
+        return new GroupFeature(id, fs);
     }
 }

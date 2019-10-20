@@ -5,6 +5,8 @@ import com.tracholar.recommend.data.JsonableData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,14 +15,15 @@ import java.util.Set;
 public class User extends JsonableData implements IUser<String> {
     private String id;
     private String deviceId;
-    private Set<String> history;
+    private List<String> history;
 
     public User(String id, String deviceId) {
         this.id = id;
         this.deviceId = deviceId;
+        this.history = new LinkedList<>();
     }
 
-    public void setHistory(Set<String> history) {
+    public void setHistory(List<String> history) {
         this.history = history;
     }
 }

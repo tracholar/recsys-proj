@@ -37,7 +37,13 @@
   "rankers" : [
     {
       "name" : "basic ranker",
-      "class" : "com.tracholar.articlerecsys.ranker.RandomModelRanker"
+      "class" : "com.tracholar.articlerecsys.ranker.GenerateModelRanker",
+      "args" : {
+        "model" : "com.tracholar.articlerecsys.model.LinearModel",
+        "args" : {
+          "file" : "path-to-model-file"
+        }
+      }
     }
   ],
   "reRankers" : [

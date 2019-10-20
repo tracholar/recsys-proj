@@ -17,11 +17,20 @@ public abstract class Feature<V>  extends JsonableData
     public abstract Map<String, Float> flatten();
 
     public SparseVector toSparseVector() {
+        return toSparseVector(1<<32);
+    }
+
+    public SparseVector toSparseVector(int m) {
         SparseVector vector = new SparseVector();
         Map<String, Float> fv = flatten();
         for(String k : fv.keySet()) {
-            vector.put(MurmurHash.getInstance().hash(k), fv.get(k));
+            long idx = Hash.hash(k) % m;
+            vector.put(idx, fv.get(k));
         }
         return vector;
+    }
+
+    public String toLibsvmFormat(){
+        return toSparseVector().toLibsvm();
     }
 }

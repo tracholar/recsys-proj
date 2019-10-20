@@ -3,12 +3,10 @@ package com.tracholar.articlerecsys.feature;
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.articlerecsys.data.ReqContext;
 import com.tracholar.articlerecsys.data.User;
-import com.tracholar.recommend.feature.CatFeature;
-import com.tracholar.recommend.feature.Feature;
-import com.tracholar.recommend.feature.GroupFeature;
-import com.tracholar.recommend.feature.ScalarFeature;
+import com.tracholar.recommend.feature.*;
 import com.tracholar.recommend.ranker.*;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +18,14 @@ public class ArticleFeatureFeatcher implements
         List<Feature> f = new LinkedList<>();
 
         // 这里造个简单特征，正常应该是查询外部存储来获取用户特征
-        f.add(new CatFeature("uid", user.getId()));
+        List<Feature> profile = new LinkedList<>();
+        profile.add(new CatFeature("uid", user.getId()));
+        profile.add(new CatFeature("deviceId", user.getDeviceId()));
+        GroupFeature profileFeat = new GroupFeature("profile", profile);
+        f.add(profileFeat);
+
+        GroupFeature historyFeat = new ListFeature<>("history", user.getHistory()).toGroupFeature();
+        f.add(historyFeat);
 
         MyFeats feats = new MyFeats(user.getId(), f);
 

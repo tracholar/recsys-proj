@@ -7,6 +7,11 @@ import java.util.stream.Collectors;
 
 public abstract class ParallelModel<P extends Score> implements Model<P> {
     protected abstract P predictRaw(List<Feature> feats);
+
+    @Override
+    public String getId(){
+        return getClass().getName();
+    }
     public List<P> predict(List<List<Feature>> features){
         return features.parallelStream()
                 .map(this::predictRaw)

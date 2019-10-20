@@ -19,9 +19,9 @@ public class RecEngineConfig extends JsonableData {
     @JSONField(ordinal = 1)
     private String name;
     @JSONField(ordinal = 2)
-    private String abtest;
+    private ComponentConfig abtest;
     @JSONField(ordinal = 3)
-    private String detailFetcher;
+    private ComponentConfig detailFetcher;
 
     @JSONField(ordinal = 4)
     private List<ComponentConfig> recalls;

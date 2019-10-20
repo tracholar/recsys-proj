@@ -1,9 +1,15 @@
 {
   "name" : "文章推荐引擎",
 
-  "abtest" : "com.tracholar.articlerecsys.ABTest",
+  "abtest" : {
+    "name" : "abtest",
+    "class" : "com.tracholar.articlerecsys.ABTest"
+  },
 
-  "detailFetcher" : "com.tracholar.articlerecsys.ArticleFetcher",
+  "detailFetcher" : {
+    "name" : "detail fetcher",
+    "class":"com.tracholar.articlerecsys.ArticleFetcher"
+  },
 
   "recalls" : [
     {

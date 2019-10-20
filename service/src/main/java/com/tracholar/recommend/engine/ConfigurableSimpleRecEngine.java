@@ -7,6 +7,7 @@ import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;
 import com.tracholar.recommend.engine.config.ComponentConfig;
+import com.tracholar.recommend.engine.config.Configable;
 import com.tracholar.recommend.engine.config.RecEngineConfig;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -44,8 +45,14 @@ public class ConfigurableSimpleRecEngine extends SimpleRecEngine {
             name = conf.getName();
 
             //abtest
-            abTestProxy = (ABTestProxy) Class.forName(conf.getAbtest()).newInstance();
-            detailFetcher = (DetailFetcher) Class.forName(conf.getDetailFetcher()).newInstance();
+            abTestProxy = (ABTestProxy) Class.forName(conf.getAbtest().getClassName()).newInstance();
+            if(abTestProxy instanceof Configable) {
+                ((Configable) abTestProxy).init(conf.getAbtest().getArgs());
+            }
+            detailFetcher = (DetailFetcher) Class.forName(conf.getDetailFetcher().getClassName()).newInstance();
+            if(detailFetcher instanceof Configable) {
+                ((Configable) detailFetcher).init(conf.getDetailFetcher().getArgs());
+            }
 
             //recall
             loadComponents(recalls, conf.getRecalls());
@@ -75,6 +82,9 @@ public class ConfigurableSimpleRecEngine extends SimpleRecEngine {
             if(strategy instanceof ABTestable && c.getAbTestKey() != null) {
                 ABTestKey key = c.getAbTestKey();
                 ((ABTestable) strategy).setAbTestKey(key);
+            }
+            if(strategy instanceof Configable) {
+                ((Configable) strategy).init(c.getArgs());
             }
             arr.add(strategy);
         }

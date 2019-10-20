@@ -1,6 +1,6 @@
 package com.tracholar.articlerecsys.recall;
 
-import com.google.gson.JsonObject;
+import com.alibaba.fastjson.JSONObject;
 import com.tracholar.articlerecsys.data.ReqContext;
 import com.tracholar.articlerecsys.data.User;
 import com.tracholar.recommend.abtest.ABTestKey;
@@ -14,14 +14,15 @@ import org.slf4j.LoggerFactory;
 
 
 public abstract class BaseRecall implements
-        Recall<User, ReqContext>, ABTestable, Configable<JsonObject> {
+        Recall<User, ReqContext>, ABTestable, Configable<JSONObject> {
     @Getter
     @Setter
     private ABTestKey abTestKey;
 
     protected Logger loger = LoggerFactory.getLogger(getClass());
 
-    public void init(JsonObject conf){
+    @Override
+    public void init(JSONObject conf){
 
     }
 }

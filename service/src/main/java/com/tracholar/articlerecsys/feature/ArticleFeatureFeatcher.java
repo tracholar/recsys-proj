@@ -24,7 +24,6 @@ public class ArticleFeatureFeatcher implements
 
         MyFeats feats = new MyFeats(user.getId(), f);
 
-
         return feats;
     }
     public List<ItemFeature> fetch(List<Article> arr){

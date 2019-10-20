@@ -1,11 +1,7 @@
 package com.tracholar.articlerecsys.data;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.tracholar.recommend.data.IItem;
-import com.tracholar.recommend.data.JsonableData;
-import com.tracholar.recommend.data.RankResult;
-import com.tracholar.recommend.data.RecallResult;
-import com.tracholar.recommend.model.PredictResult;
+import com.tracholar.recommend.data.*;
 import com.tracholar.recommend.model.SimpleScore;
 import lombok.*;
 
@@ -13,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 public class Article extends JsonableData
-        implements IItem<String>, RecallResult<String>, RankResult<String>, PredictResult<String> {
+        implements IItem<String>, RecallResult<String>, RankResult<String> {
     @JSONField
     private String id;
     @JSONField
@@ -30,7 +26,7 @@ public class Article extends JsonableData
         this.title = title;
     }
     @JSONField
-    private SimpleScore score;
+    private SimpleScore<Float> score;
     @JSONField
     private int rank;
 

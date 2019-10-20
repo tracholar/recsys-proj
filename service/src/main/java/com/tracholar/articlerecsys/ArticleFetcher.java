@@ -2,26 +2,25 @@ package com.tracholar.articlerecsys;
 
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.articlerecsys.db.MysqlDB;
-import com.tracholar.recommend.data.HasId;
 import com.tracholar.recommend.engine.DetailFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class ArticleFetcher implements DetailFetcher<Article> {
+public class ArticleFetcher implements DetailFetcher<Article, Article> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    private List<Article> fetchFromMysql(List<HasId> ids) {
-        List<Article> articles = new ArrayList<>();
+    private Map<String, Article> fetchFromMysql(List<String> ids) {
+        Map<String, Article> articles = new HashMap<>();
 
         try {
             StringBuffer idStr = new StringBuffer();
-            for(HasId<String> id : ids) {
+            for(String id : ids) {
                 if(idStr.length() > 0) idStr.append(",");
-                idStr.append(id.getId());
+                idStr.append(id);
             }
 
             Connection conn = MysqlDB.getInstance();
@@ -30,13 +29,14 @@ public class ArticleFetcher implements DetailFetcher<Article> {
             ResultSet rs = stat.executeQuery(sql);
             while (rs.next()) {
                 Article article = new Article();
-                article.setId(rs.getString("id"));
+                String id = rs.getString("id");
+                article.setId(id);
                 article.setTitle(rs.getString("title"));
                 article.setContent(rs.getString("body"));
                 article.setUrl(rs.getString("link"));
                 article.setAuthor(rs.getString("site"));
 
-                articles.add(article);
+                articles.put(id, article);
             }
 
             logger.debug("Fetcher article sql: {}", sql);
@@ -46,10 +46,24 @@ public class ArticleFetcher implements DetailFetcher<Article> {
         }
         return articles;
     }
-    public List<Article> fetch(List<HasId> arr){
-        List<Article> articles = fetchFromMysql(arr);
 
-        return articles;
+    @Override
+    public List<Article> fetch(List<Article> arr){
+        List<String> ids = arr.stream().map(e -> e.getId()).collect(Collectors.toList());
+        Map<String, Article> articles = fetchFromMysql(ids);
+        List<Article> res = new LinkedList<>();
+        for(int i = 0; i<arr.size(); i++){
+            Article rankData = arr.get(i);
+            String id = rankData.getId();
+            if(articles.containsKey(id)){
+                Article article = articles.get(id);
+                article.setRank(rankData.getRank());
+                article.setScore(rankData.getScore());
+
+                res.add(article);
+            }
+        }
+        return res;
     }
 
 }

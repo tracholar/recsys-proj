@@ -3,7 +3,7 @@ package com.tracholar.recommend.ranker;
 import com.tracholar.recommend.data.*;
 import com.tracholar.recommend.engine.Ranker;
 import com.tracholar.recommend.model.ModelProxy;
-import com.tracholar.recommend.model.PredictResult;
+import com.tracholar.recommend.model.Score;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * 如果ModelRanker部署在单独的服务中，则就像在推荐引擎的RANKER调用一样。
  */
 public abstract class ModelRanker<R extends RecallResult, RK extends RankResult,
-        S extends HasScore, P extends PredictResult>
+        S extends Score>
         implements Ranker<R,RK> {
     protected abstract ModelProxy<S> getModelProxy();
     protected abstract UserFeatureFetcher getUserFeatFetcher();

@@ -1,18 +1,12 @@
 package com.tracholar.articlerecsys.recall;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.articlerecsys.data.ReqContext;
 import com.tracholar.articlerecsys.data.User;
 import com.tracholar.articlerecsys.db.MysqlDB;
-import com.tracholar.recommend.abtest.ABTestKey;
-import com.tracholar.recommend.abtest.ABTestable;
-import com.tracholar.recommend.data.IContext;
-import com.tracholar.recommend.data.IUser;
-import com.tracholar.recommend.engine.Recall;
 import com.tracholar.recommend.data.RecallResult;
-import lombok.Getter;
-import lombok.Setter;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,6 +17,8 @@ import java.util.List;
 
 
 public class TimeRecall extends BaseRecall {
+
+    @Override
     public List<RecallResult> recall(User user, ReqContext ctx){
         List<RecallResult> results = new ArrayList<>();
 

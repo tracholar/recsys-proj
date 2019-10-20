@@ -1,5 +1,7 @@
 package com.tracholar.recommend.data;
 
-public interface HasScore {
-    Score getScore();
+import com.tracholar.recommend.model.Score;
+
+public interface HasScore<T extends Score> {
+    T getScore();
 }

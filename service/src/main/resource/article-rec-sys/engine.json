@@ -43,7 +43,10 @@
   "reRankers" : [
     {
       "name" : "basic re-ranker",
-      "class" : "com.tracholar.articlerecsys.ranker.RandomRanker"
+      "class" : "com.tracholar.articlerecsys.ranker.RandomRanker",
+      "args" : {
+        "limit" : 30
+      }
     }
   ]
 }

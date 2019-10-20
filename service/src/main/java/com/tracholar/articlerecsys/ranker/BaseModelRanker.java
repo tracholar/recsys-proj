@@ -1,9 +1,9 @@
 package com.tracholar.articlerecsys.ranker;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.articlerecsys.feature.ArticleFeatureFeatcher;
+import com.tracholar.recommend.model.SimpleScore;
 import com.tracholar.recommend.ranker.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Getter(AccessLevel.PROTECTED)
 public abstract class BaseModelRanker
-        extends ModelRanker<Article, Article, Article, Article> {
+        extends ModelRanker<Article, Article, SimpleScore> {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     protected void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c){
@@ -31,19 +31,19 @@ public abstract class BaseModelRanker
     }
 
     @Override
-    protected List<Article> createResult(List<Article> preds, List<Article> articles){
+    protected List<Article> createResult(List<SimpleScore> preds, List<Article> articles){
         // 设置得分
         for(int i = 0; i<articles.size(); i++){
-            articles.get(i).setScore(preds.get(i).getScore());
+            articles.get(i).setScore(preds.get(i));
         }
         List<Article> results = articles.stream()
                 .sorted(new Comparator<Article>() {
             @Override
             public int compare(Article o1, Article o2) {
-                float s1 = o1.getScore().getScore();
-                float s2 = o2.getScore().getScore();
+                float s1 = o1.getScore().getValue();
+                float s2 = o2.getScore().getValue();
                 if(s1 == s2) return 0;
-                if(s1 > s2) return 1;
+                if(s1 < s2) return 1;
                 return -1;
             }
         }).collect(Collectors.toList());

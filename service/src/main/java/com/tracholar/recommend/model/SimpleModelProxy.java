@@ -1,6 +1,5 @@
 package com.tracholar.recommend.model;
 
-import com.tracholar.recommend.data.HasScore;
 import com.tracholar.recommend.feature.Feature;
 import com.tracholar.recommend.ranker.ContextFeature;
 import com.tracholar.recommend.ranker.ItemFeature;
@@ -9,7 +8,7 @@ import com.tracholar.recommend.ranker.UserFeature;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SimpleModelProxy<S extends HasScore>
+public class SimpleModelProxy<S extends Score>
         implements ModelProxy<S> {
     private Model<S> model;
 

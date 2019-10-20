@@ -6,7 +6,7 @@ import com.tracholar.recommend.engine.DetailFetcher;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DemoDetailFetcher implements DetailFetcher<DemoItem> {
+public class DemoDetailFetcher implements DetailFetcher<HasId, DemoItem> {
     @Override
     public List<DemoItem> fetch(List<HasId> arr){
         List<DemoItem> items = new ArrayList<>();

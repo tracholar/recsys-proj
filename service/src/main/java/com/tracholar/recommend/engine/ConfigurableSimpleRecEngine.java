@@ -1,8 +1,5 @@
 package com.tracholar.recommend.engine;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.abtest.ABTestable;
@@ -11,11 +8,9 @@ import com.tracholar.recommend.engine.config.Configable;
 import com.tracholar.recommend.engine.config.RecEngineConfig;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -7,8 +7,6 @@ import com.tracholar.articlerecsys.data.ReqContext;
 import com.tracholar.articlerecsys.data.User;
 import com.tracholar.recommend.data.IItem;
 import com.tracholar.recommend.engine.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ public class ArticleRecEngine {
     }
 
     private JsonConfigRecEngine engine;
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public ArticleRecEngine() throws Exception {
         engine = JsonConfigRecEngine.load(getClass().getResourceAsStream(configFile));

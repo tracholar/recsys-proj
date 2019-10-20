@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class DemoMerge implements Merge {
+public class DemoMerge implements Merge<RecallResult> {
 
     // 简单合并
     @Override

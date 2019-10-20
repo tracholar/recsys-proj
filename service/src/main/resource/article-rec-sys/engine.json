@@ -24,7 +24,7 @@
   "merges" : [
     {
       "name": "basic-merge",
-      "class": "com.tracholar.recommend.BasicMerge"
+      "class": "com.tracholar.recommend.merge.BasicMerge"
     }
   ],
   "filters" : [

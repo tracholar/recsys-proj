@@ -19,8 +19,8 @@ import java.util.List;
 public class TimeRecall extends BaseRecall {
 
     @Override
-    public List<RecallResult> recall(User user, ReqContext ctx){
-        List<RecallResult> results = new ArrayList<>();
+    public List<Article> recall(User user, ReqContext ctx){
+        List<Article> results = new ArrayList<>();
 
         try {
             Connection conn = MysqlDB.getInstance();

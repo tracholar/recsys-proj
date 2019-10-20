@@ -6,6 +6,6 @@ import com.tracholar.recommend.data.RecallResult;
 
 import java.util.List;
 
-public interface Recall<U extends IUser, C extends IContext> {
-    List<RecallResult> recall(U user, C ctx);
+public interface Recall<U extends IUser, C extends IContext, R extends RecallResult> {
+    List<R> recall(U user, C ctx);
 }

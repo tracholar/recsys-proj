@@ -18,5 +18,6 @@ public class TestDictFeature {
         System.out.println(feature.toJson());
         System.out.println(feature.toLibsvmFormat(100));
         System.out.println(feature.toLibFFMFormat(100));
+        System.out.println(feature.toGroupSparseVector(32));
     }
 }

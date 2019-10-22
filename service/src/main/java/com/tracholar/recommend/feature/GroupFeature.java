@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,17 @@ public class GroupFeature extends Feature<List<Feature>> {
         return group.getName();
     }
 
-    public GroupFeature(String name, List<Feature> value) {
-        this.group = new Group(name);
-        this.value = value;
+    public boolean add(Feature f) {
+        return value.add(f);
+    }
+
+    public boolean addAll(List<Feature> fs) {
+        return value.addAll(fs);
+    }
+
+    public GroupFeature(int gid, String name) {
+        this.group = new Group(gid, name);
+        this.value = new LinkedList<>();
     }
 
     public GroupFeature(int gid, String name, List<Feature> value) {
@@ -36,7 +45,9 @@ public class GroupFeature extends Feature<List<Feature>> {
         for(Feature v : value) {
             Map<String, Float> fv = v.flatten();
             for(String kk : fv.keySet()) {
-                map.put(getId() + ":" + kk, fv.get(kk));
+                if(fv.get(kk) != null) {
+                    map.put(getId() + ":" + kk, fv.get(kk));
+                }
             }
         }
         return map;
@@ -44,6 +55,7 @@ public class GroupFeature extends Feature<List<Feature>> {
 
     /**
      * 将id作为fieldId
+     * @param m m是idx所占的比特数！最终的idx第m位是特征id，剩下的高位是fieldId
      * @return
      */
     public SparseVector toGroupSparseVector(int m) {
@@ -54,7 +66,7 @@ public class GroupFeature extends Feature<List<Feature>> {
             for(String k : fmap.keySet()){
                 long idx = fieldId;
                 idx <<= m;
-                idx += Hash.hash(k) & (1L << m - 1L); // TODO 检查下正确性
+                idx += Hash.hash(k) & ((1L << m) - 1L); // TODO 检查下正确性
                 vector.put(idx, fmap.get(k));
             }
         }

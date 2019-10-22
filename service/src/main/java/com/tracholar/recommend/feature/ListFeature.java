@@ -29,6 +29,7 @@ public class ListFeature<T> extends Feature<List<T>> {
 
     public GroupFeature toGroupFeature(int gid){
         List<Feature> fs = value.stream()
+                .filter(e -> e != null)
                 .map(e -> new ScalarFeature(e.toString(), 1.0f))
                 .collect(Collectors.toList());
         return new GroupFeature(gid, id, fs);

@@ -21,28 +21,28 @@ public class Utils {
         return res;
     }
 
-    public static SparseVector toSparseVector(List<Feature> feats) {
+    public static SparseVector toSparseVector(List<Feature> feats, long m) {
         SparseVector vector = new SparseVector();
         for(Feature f : feats) {
-            vector.putAll(f.toSparseVector());
+            vector.putAll(f.toSparseVector(m));
         }
         return vector;
     }
 
-    public static String toLibsvmFormat(List<Feature> feats) {
+    public static String toLibsvmFormat(List<Feature> feats, long m) {
         StringBuffer sb = new StringBuffer();
         for(Feature f : feats) {
             if(sb.length() > 0) sb.append(" ");
-            sb.append(f.toLibsvmFormat());
+            sb.append(f.toLibsvmFormat(m));
         }
         return sb.toString();
     }
 
-    public static String toLibffmFormat(List<GroupFeature> feats) {
+    public static String toLibffmFormat(List<GroupFeature> feats, int mb) {
         StringBuffer sb = new StringBuffer();
         for(GroupFeature f : feats) {
             if(sb.length() > 0) sb.append(" ");
-            sb.append(f.toLibFFMFormat());
+            sb.append(f.toLibFFMFormat(mb));
         }
         return sb.toString();
     }

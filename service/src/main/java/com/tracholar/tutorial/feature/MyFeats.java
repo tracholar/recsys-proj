@@ -1,7 +1,6 @@
-package com.tracholar.articlerecsys.feature;
+package com.tracholar.tutorial.feature;
 
 import com.tracholar.recommend.data.JsonableData;
-import com.tracholar.recommend.feature.CatFeature;
 import com.tracholar.recommend.feature.Feature;
 import com.tracholar.recommend.ranker.ContextFeature;
 import com.tracholar.recommend.ranker.ItemFeature;
@@ -9,7 +8,6 @@ import com.tracholar.recommend.ranker.UserFeature;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +21,5 @@ public class MyFeats extends JsonableData implements UserFeature<String>,
     public List<Feature> getFeatures(){
         return features.stream().filter(e -> e.getValue() != null)
                 .collect(Collectors.toList());
-    }
-
-    public boolean add(Feature f) {
-        return features.add(f);
     }
 }

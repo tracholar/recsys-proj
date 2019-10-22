@@ -21,7 +21,9 @@ public class ScalarFeature extends Feature<Float>{
     }
     public Map<String, Float> flatten() {
         Map<String, Float> map = new HashMap<>();
-        map.put(id, v);
+        if(v != null) {
+            map.put(id, v);
+        }
         return map;
     }
 }

@@ -18,8 +18,9 @@ public class CatFeature<T> extends Feature<T> {
 
     public Map<String, Float> flatten() {
         Map<String, Float> map = new HashMap<>();
-        map.put(id + ":" + value, 1.0f);
-
+        if(value != null) {
+            map.put(id + ":" + value, 1.0f);
+        }
         return map;
     }
 }

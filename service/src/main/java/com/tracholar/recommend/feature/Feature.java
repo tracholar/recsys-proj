@@ -25,12 +25,14 @@ public abstract class Feature<V>  extends JsonableData
         Map<String, Float> fv = flatten();
         for(String k : fv.keySet()) {
             long idx = Hash.hash(k) % m;
-            vector.put(idx, fv.get(k));
+            if(fv.get(k) != null) {
+                vector.put(idx, fv.get(k));
+            }
         }
         return vector;
     }
 
-    public String toLibsvmFormat(int m) {
+    public String toLibsvmFormat(long m) {
         return toSparseVector(m).toLibsvm();
     }
     public String toLibsvmFormat(){

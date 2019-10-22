@@ -2,10 +2,12 @@ package com.tracholar.recommend.data;
 
 import com.alibaba.fastjson.JSON;
 
-public abstract class JsonableData {
+import java.io.Serializable;
+
+public abstract class JsonableData implements Serializable {
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return toJson();
     }
 
     public String toJson() {

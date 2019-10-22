@@ -1,5 +1,7 @@
 package com.tracholar.recommend.feature;
 
+import com.alibaba.fastjson.JSONObject;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,5 +17,12 @@ public class TestListFeature {
         System.out.println(f.flatten());
         System.out.println(f.toSparseVector());
         System.out.println(f.toSparseVector().toLibsvm());
+
+        String json = f.toJson();
+        System.out.println(json);
+        ListFeature f1 = JSONObject.parseObject(json, ListFeature.class);
+        Assert.assertEquals(f.getId(), f1.getId());
+        Assert.assertEquals(f.getValue(), f1.getValue());
     }
+
 }

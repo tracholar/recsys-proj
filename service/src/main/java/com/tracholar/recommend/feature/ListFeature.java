@@ -3,6 +3,8 @@ package com.tracholar.recommend.feature;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,7 +18,7 @@ public class ListFeature<T> extends Feature<List<T>> {
     @JSONField
     private String id;
     @JSONField
-    private List<T> value;
+    private List<T> value = new LinkedList<>();
 
     public Map<String, Float> flatten() {
         Map<String, Float> map = new HashMap<>();
@@ -32,6 +34,6 @@ public class ListFeature<T> extends Feature<List<T>> {
                 .filter(e -> e != null)
                 .map(e -> new ScalarFeature(e.toString(), 1.0f))
                 .collect(Collectors.toList());
-        return new GroupFeature(gid, id, fs);
+        return new GroupFeature(new Group(gid, id), fs);
     }
 }

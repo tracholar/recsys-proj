@@ -20,7 +20,7 @@ public class ArticleFeatureFeatcher implements
         List<Feature> f = new LinkedList<>();
 
         // 这里造个简单特征，正常应该是查询外部存储来获取用户特征
-        GroupFeature profile = new GroupFeature(1,"profile");
+        GroupFeature profile = new GroupFeature(new Group(1,"profile"));
         profile.add(new CatFeature("uid", user.getId()));
         profile.add(new CatFeature("deviceId", user.getDeviceId()));
         f.add(profile);
@@ -39,7 +39,7 @@ public class ArticleFeatureFeatcher implements
         for(Article a : arr) {
             List<Feature> f = new LinkedList<>();
 
-            GroupFeature articleFeat = new GroupFeature(3, "aritcle");
+            GroupFeature articleFeat = new GroupFeature(new Group(3, "aritcle"));
             articleFeat.add(new CatFeature("article_id", a.getId()));
             //articleFeat.add(new CatFeature("author", a.getAuthor()));
 
@@ -54,7 +54,7 @@ public class ArticleFeatureFeatcher implements
     public ContextFeature fetch(ReqContext ctx){
         List<Feature> ctxFeats = new LinkedList<>();
 
-        GroupFeature feat = new GroupFeature(4, "ctx");
+        GroupFeature feat = new GroupFeature(new Group(4, "ctx"));
         feat.add(new ScalarFeature("lat", ctx.getLat()));
         feat.add(new ScalarFeature("lng", ctx.getLng()));
         feat.add(new CatFeature("cityId", ctx.getCityId()));

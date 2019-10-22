@@ -1,6 +1,7 @@
 package com.tracholar.recommend.feature;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,9 +15,10 @@ import java.util.Map;
 public class GroupFeature extends Feature<List<Feature>> {
     @JSONField
     private Group group;
-    @JSONField
+    @JSONField(serialzeFeatures = {SerializerFeature.WriteClassName})
     private List<Feature> value;
 
+    @JSONField(serialize = false)
     public String getId() {
         return group.getName();
     }
@@ -29,14 +31,9 @@ public class GroupFeature extends Feature<List<Feature>> {
         return value.addAll(fs);
     }
 
-    public GroupFeature(int gid, String name) {
-        this.group = new Group(gid, name);
+    public GroupFeature(Group group) {
+        this.group = group;
         this.value = new LinkedList<>();
-    }
-
-    public GroupFeature(int gid, String name, List<Feature> value) {
-        this.group = new Group(gid, name);
-        this.value = value;
     }
 
     @Override

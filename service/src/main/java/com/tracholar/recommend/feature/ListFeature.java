@@ -27,10 +27,10 @@ public class ListFeature<T> extends Feature<List<T>> {
         return map;
     }
 
-    public GroupFeature toGroupFeature(){
+    public GroupFeature toGroupFeature(int gid){
         List<Feature> fs = value.stream()
                 .map(e -> new ScalarFeature(e.toString(), 1.0f))
                 .collect(Collectors.toList());
-        return new GroupFeature(id, fs);
+        return new GroupFeature(gid, id, fs);
     }
 }

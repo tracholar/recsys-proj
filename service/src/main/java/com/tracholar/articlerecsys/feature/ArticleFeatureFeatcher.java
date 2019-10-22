@@ -21,10 +21,10 @@ public class ArticleFeatureFeatcher implements
         List<Feature> profile = new LinkedList<>();
         profile.add(new CatFeature("uid", user.getId()));
         profile.add(new CatFeature("deviceId", user.getDeviceId()));
-        GroupFeature profileFeat = new GroupFeature("profile", profile);
+        GroupFeature profileFeat = new GroupFeature(1,"profile", profile);
         f.add(profileFeat);
 
-        GroupFeature historyFeat = new ListFeature<>("history", user.getHistory()).toGroupFeature();
+        GroupFeature historyFeat = new ListFeature<>("history", user.getHistory()).toGroupFeature(2);
         f.add(historyFeat);
 
         MyFeats feats = new MyFeats(user.getId(), f);

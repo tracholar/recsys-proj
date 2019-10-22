@@ -12,9 +12,23 @@ import java.util.Map;
 @AllArgsConstructor
 public class GroupFeature extends Feature<List<Feature>> {
     @JSONField
-    private String id;
+    private Group group;
     @JSONField
     private List<Feature> value;
+
+    public String getId() {
+        return group.getName();
+    }
+
+    public GroupFeature(String name, List<Feature> value) {
+        this.group = new Group(name);
+        this.value = value;
+    }
+
+    public GroupFeature(int gid, String name, List<Feature> value) {
+        this.group = new Group(gid, name);
+        this.value = value;
+    }
 
     @Override
     public Map<String, Float> flatten() {
@@ -22,7 +36,7 @@ public class GroupFeature extends Feature<List<Feature>> {
         for(Feature v : value) {
             Map<String, Float> fv = v.flatten();
             for(String kk : fv.keySet()) {
-                map.put(id + ":" + kk, fv.get(kk));
+                map.put(getId() + ":" + kk, fv.get(kk));
             }
         }
         return map;
@@ -34,12 +48,7 @@ public class GroupFeature extends Feature<List<Feature>> {
      */
     public SparseVector toGroupSparseVector(int m) {
         SparseVector vector = new SparseVector();
-        int fieldId = 0;
-        try{
-            fieldId = Integer.parseInt(id);
-        }catch (NumberFormatException e){
-            fieldId = Hash.hash(id);
-        }
+        int fieldId = group.getId();
         for(Feature f : value) {
             Map<String, Float> fmap = f.flatten();
             for(String k : fmap.keySet()){
@@ -57,12 +66,7 @@ public class GroupFeature extends Feature<List<Feature>> {
     }
     public String toLibFFMFormat(long m){
         StringBuffer sb = new StringBuffer();
-        int fieldId = 0;
-        try{
-            fieldId = Integer.parseInt(id);
-        }catch (NumberFormatException e){
-            fieldId = Hash.hash(id);
-        }
+        int fieldId = group.getId();
         for(Feature f : value) {
             Map<String, Float> fmap = f.flatten();
             for(String k : fmap.keySet()){

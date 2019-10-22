@@ -11,7 +11,7 @@ public class TestDictFeature {
         List<Feature> f = new ArrayList<>();
         f.add(new ScalarFeature("age", 25f));
         f.add(new CatFeature<>("gender", "man"));
-        GroupFeature feature = new GroupFeature("1", f);
+        GroupFeature feature = new GroupFeature(1,"profile", f);
         System.out.println(feature.flatten());
         System.out.println(feature.toSparseVector());
 

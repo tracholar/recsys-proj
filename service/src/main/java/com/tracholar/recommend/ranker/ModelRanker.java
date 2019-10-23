@@ -31,16 +31,7 @@ public abstract class ModelRanker<R extends RecallResult, RK extends RankResult,
      */
     protected abstract List<RK> createResult(List<S> preds, List<R> items);
 
-    private Logger logger = LoggerFactory.getLogger(getClass().getName());
-    protected void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c){
-        JSONObject data = new JSONObject();
-        data.put("user", u);
-        data.put("items", i);
-        data.put("ctx", c);
-
-        // 打日志
-        logger.info("{}", data);
-    }
+    protected abstract void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c);
 
     @Override
     public List<RK> rank(IUser user, List<R> results, IContext ctx){

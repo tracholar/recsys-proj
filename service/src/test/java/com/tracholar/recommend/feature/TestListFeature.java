@@ -25,4 +25,12 @@ public class TestListFeature {
         Assert.assertEquals(f.getValue(), f1.getValue());
     }
 
+    @Test
+    public void test2(){
+        ListFeature<String> f = new ListFeature<>("title");
+        f.add("媒体");
+        f.add("关注");
+        System.out.println(f);
+    }
+
 }

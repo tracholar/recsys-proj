@@ -1,7 +1,6 @@
 package com.tracholar.articlerecsys.ranker;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tracholar.articlerecsys.model.RandomModel;
 import com.tracholar.recommend.engine.config.Configable;
 import com.tracholar.recommend.model.Model;
 import com.tracholar.recommend.model.SimpleModelProxy;

@@ -18,8 +18,18 @@ public class ListFeature<T> extends Feature<List<T>> {
     @JSONField
     private String id;
     @JSONField
-    private List<T> value = new LinkedList<>();
+    private List<T> value;
 
+    public ListFeature(String id) {
+        this.id = id;
+        this.value = new LinkedList<>();
+    }
+    public boolean add(T v) {
+        return value.add(v);
+    }
+    public boolean addAll(List<T> v) {
+        return value.addAll(v);
+    }
     public Map<String, Float> flatten() {
         Map<String, Float> map = new HashMap<>();
         for(int i = 0; i < value.size(); i++) {

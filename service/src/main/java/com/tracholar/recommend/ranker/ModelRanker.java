@@ -1,9 +1,12 @@
 package com.tracholar.recommend.ranker;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tracholar.recommend.data.*;
 import com.tracholar.recommend.engine.Ranker;
 import com.tracholar.recommend.model.ModelProxy;
 import com.tracholar.recommend.model.Score;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +31,16 @@ public abstract class ModelRanker<R extends RecallResult, RK extends RankResult,
      */
     protected abstract List<RK> createResult(List<S> preds, List<R> items);
 
-    protected abstract void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c);
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
+    protected void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c){
+        JSONObject data = new JSONObject();
+        data.put("user", u);
+        data.put("items", i);
+        data.put("ctx", c);
+
+        // 打日志
+        logger.info("{}", data);
+    }
 
     @Override
     public List<RK> rank(IUser user, List<R> results, IContext ctx){

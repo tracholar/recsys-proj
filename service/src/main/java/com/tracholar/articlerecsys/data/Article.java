@@ -21,6 +21,9 @@ public class Article extends JsonableData
     @JSONField
     private String author;
 
+    public Article(String id) {
+        this.id = id;
+    }
     public Article(String id, String title) {
         this.id = id;
         this.title = title;

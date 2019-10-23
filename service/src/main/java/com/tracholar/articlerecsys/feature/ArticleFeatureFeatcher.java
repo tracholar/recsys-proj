@@ -1,11 +1,14 @@
 package com.tracholar.articlerecsys.feature;
 
+import com.tracholar.articlerecsys.ArticleFetcher;
 import com.tracholar.articlerecsys.data.Article;
 import com.tracholar.articlerecsys.data.ReqContext;
 import com.tracholar.articlerecsys.data.User;
 import com.tracholar.recommend.feature.*;
 import com.tracholar.recommend.ranker.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,16 +35,24 @@ public class ArticleFeatureFeatcher implements
 
         return feats;
     }
+    private ArticleFetcher fetcher = new ArticleFetcher();
     public List<ItemFeature> fetch(List<Article> arr){
         List<ItemFeature> featLists = new LinkedList<>();
 
         // 这里造个简单特征，正常应该是查询外部存储来获取特征
-        for(Article a : arr) {
+        List<Article> res = fetcher.fetch(arr);
+        for(Article a : res) {
             List<Feature> f = new LinkedList<>();
 
             GroupFeature articleFeat = new GroupFeature(new Group(3, "aritcle"));
             articleFeat.add(new CatFeature("article_id", a.getId()));
-            //articleFeat.add(new CatFeature("author", a.getAuthor()));
+            articleFeat.add(new CatFeature("author", a.getAuthor()));
+            List<String> title = new LinkedList<>();
+            for(byte b : a.getTitle().getBytes()){
+                title.add(b + "");
+            }
+            articleFeat.add(new ListFeature("title", title));
+            articleFeat.add(new CatFeature("site", a.getUrl().substring(8, 18)));
 
             f.add(articleFeat);
 

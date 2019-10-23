@@ -18,17 +18,6 @@ import java.util.stream.Collectors;
 @Getter(AccessLevel.PROTECTED)
 public abstract class BaseModelRanker
         extends ModelRanker<Article, Article, SimpleScore> {
-    private Logger logger = LoggerFactory.getLogger(getClass().getName());
-
-    protected void logFeatures(UserFeature u, List<ItemFeature> i, ContextFeature c){
-        JSONObject data = new JSONObject();
-        data.put("user", u);
-        data.put("items", i);
-        data.put("ctx", c);
-
-        // 打日志
-        logger.info("{}", data);
-    }
 
     @Override
     protected List<Article> createResult(List<SimpleScore> preds, List<Article> articles){

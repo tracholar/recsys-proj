@@ -25,7 +25,7 @@ public class LinearModel extends ParallelModel<SimpleScore>
         Map<String, Float> featMap = Utils.toMap(feats);
 
         log.info("featMap: {}", featMap);
-        log.info("libsvm: {}", Utils.toSparseVector(feats, 100).toLibsvm());
+        log.info("libsvm: {}", Utils.toSparseVector(feats, 1000).toLibsvm());
 
         float score = b;
         for(String k : featMap.keySet()) {

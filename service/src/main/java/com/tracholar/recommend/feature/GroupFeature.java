@@ -5,18 +5,22 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
-@Getter
+
 @AllArgsConstructor
 public class GroupFeature extends Feature<List<Feature>> {
+    @Getter
     @JSONField
     private Group group;
-    @JSONField(serialzeFeatures = {SerializerFeature.WriteClassName})
+    @JSONField
     private List<Feature> value;
+
+    public List<Feature> getValue(){
+        return value.stream().filter(e -> e.getValue() != null)
+                .collect(Collectors.toList());
+    }
 
     @JSONField(serialize = false)
     public String getId() {

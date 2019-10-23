@@ -7,8 +7,6 @@ import com.tracholar.articlerecsys.data.User;
 import com.tracholar.recommend.feature.*;
 import com.tracholar.recommend.ranker.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

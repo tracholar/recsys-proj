@@ -23,6 +23,12 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>
@@ -134,7 +140,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>1.5.15.RELEASE</version>
         </dependency>
-
 
         <dependency>
             <groupId>junit</groupId>

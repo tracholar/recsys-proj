@@ -1,0 +1,58 @@
+{
+  "name" : "文章推荐引擎",
+
+  "abtest" : {
+    "name" : "abtest",
+    "class" : "com.tracholar.articlerecsys.ABTest"
+  },
+
+  "detailFetcher" : {
+    "name" : "detail fetcher",
+    "class":"com.tracholar.articlerecsys.ArticleFetcher"
+  },
+
+  "recalls" : [
+    {
+      "name": "time-recall",
+      "class": "com.tracholar.articlerecsys.recall.TimeRecall",
+      "abtestKey": {
+        "layerKey" : "1",
+        "flowKey" : "0,1,2,3,4,5,6,7,8,9"
+      }
+    }
+  ],
+  "merges" : [
+    {
+      "name": "basic-merge",
+      "class": "com.tracholar.recommend.merge.BasicMerge"
+    }
+  ],
+  "filters" : [
+    {
+      "name" : "basic-filter",
+      "class" : "com.tracholar.articlerecsys.filter.HistoryFilter"
+    }
+
+  ],
+  "rankers" : [
+    {
+      "name" : "basic ranker",
+      "class" : "com.tracholar.articlerecsys.ranker.GenerateModelRanker",
+      "args" : {
+        "model" : "com.tracholar.articlerecsys.model.LinearModel",
+        "args" : {
+          "file" : "path-to-model-file"
+        }
+      }
+    }
+  ],
+  "reRankers" : [
+    {
+      "name" : "basic re-ranker",
+      "class" : "com.tracholar.articlerecsys.ranker.RandomRanker",
+      "args" : {
+        "limit" : 30
+      }
+    }
+  ]
+}

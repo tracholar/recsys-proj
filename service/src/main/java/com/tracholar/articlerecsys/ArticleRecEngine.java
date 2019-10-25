@@ -8,8 +8,12 @@ import com.tracholar.articlerecsys.data.User;
 import com.tracholar.recommend.data.IItem;
 import com.tracholar.recommend.engine.*;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarFile;
 
 public class ArticleRecEngine {
     @JSONField
@@ -23,7 +27,20 @@ public class ArticleRecEngine {
     private JsonConfigRecEngine engine;
 
     public ArticleRecEngine() throws Exception {
-        engine = JsonConfigRecEngine.load(getClass().getResourceAsStream(configFile));
+        URL url = getClass().getProtectionDomain().getCodeSource().getLocation();
+
+        System.out.println(url);
+
+        InputStream is;
+        if(url.getFile().endsWith(".jar")) {
+            System.out.println("read jar resource file");
+            JarFile file = new JarFile(new File(url.toURI()));
+            is = file.getInputStream(file.getEntry(configFile.substring(1)));
+        }else{
+            System.out.println("read file");
+            is = getClass().getResourceAsStream(configFile);
+        }
+        engine = JsonConfigRecEngine.load(is);
     }
 
     public List<Article> recommend(User user, ReqContext ctx) {

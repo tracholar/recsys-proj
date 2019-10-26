@@ -4,7 +4,9 @@ import com.tracholar.recommend.data.IContext;
 import com.tracholar.recommend.data.IUser;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
+import com.tracholar.recommend.engine.config.Autoload;
 
+@Autoload
 public class DemoABTestProxy implements ABTestProxy {
     @Override
     public boolean match(IUser user, IContext ctx, ABTestKey key){

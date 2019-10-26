@@ -6,6 +6,7 @@ import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestable;
 import com.tracholar.recommend.data.RecallResult;
 import com.tracholar.recommend.engine.Recall;
+import com.tracholar.recommend.engine.config.Autoload;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Autoload
 @Getter
 @Setter
 public class DemoRecall implements Recall, ABTestable {

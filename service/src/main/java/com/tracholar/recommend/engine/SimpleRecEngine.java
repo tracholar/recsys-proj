@@ -44,14 +44,19 @@ public abstract class SimpleRecEngine implements RecEngine {
         }
         return strategies;
     }
-    private <T> T getByABTest(IUser user, IContext ctx, List<T> arr){
+    private <T> T getByABTest(IUser user, IContext ctx, List<T> arr)
+            throws ComponentNotFoundException{
         List<T> filtered = filterByABTest(user, ctx, arr);
-        assert filtered.size() == 1;
+
+        if(filtered.size() == 0){
+            throw new ComponentNotFoundException();
+        }
         return filtered.get(0);
     }
 
 
-    private List<RecallResult> doRecall(IUser user, IContext ctx){
+    private List<RecallResult> doRecall(IUser user, IContext ctx)
+        throws ComponentNotFoundException{
         Map<Recall, List<RecallResult>> results = new HashMap<>();
         for(Recall strategy : filterByABTest(user, ctx, getRecalls())){
             logger.info("Match recall {}", strategy.getClass().getName());
@@ -87,29 +92,35 @@ public abstract class SimpleRecEngine implements RecEngine {
     }
 
     public List<IItem> recommend(IUser user, IContext ctx){
-        logger.debug("user={}, ctx={}", user, ctx);
+        try {
 
-        // recall
-        List<RecallResult> results = doRecall(user, ctx);
-        logger.info("召回 #{} items.", results.size());
+            logger.debug("user={}, ctx={}", user, ctx);
 
-        // filter
-        results = doFilter(user, results, ctx);
-        logger.info("过滤后剩下 #{} items.", results.size());
+            // recall
+            List<RecallResult> results = doRecall(user, ctx);
+            logger.info("召回 #{} items.", results.size());
 
-        // rank
-        Ranker ranker = getByABTest(user, ctx, getRankers());
-        logger.info("Match ranker {}", ranker.getClass().getName());
-        List<RankResult> rankResults = ranker.rank(user, results, ctx);
-        logger.info("排序后剩下 #{} items.", rankResults.size());
+            // filter
+            results = doFilter(user, results, ctx);
+            logger.info("过滤后剩下 #{} items.", results.size());
 
-        // re-rank
-        rankResults = getByABTest(user, ctx, getReRankers())
-                .reRank(user, rankResults, ctx);
+            // rank
+            Ranker ranker = getByABTest(user, ctx, getRankers());
+            logger.info("Match ranker {}", ranker.getClass().getName());
+            List<RankResult> rankResults = ranker.rank(user, results, ctx);
+            logger.info("排序后剩下 #{} items.", rankResults.size());
 
-        logger.info("Re-ranker 后剩下 #{} items.", rankResults.size());
-        // fetch details
-        return getDetailFetcher().fetch(rankResults);
+            // re-rank
+            rankResults = getByABTest(user, ctx, getReRankers())
+                    .reRank(user, rankResults, ctx);
+
+            logger.info("Re-ranker 后剩下 #{} items.", rankResults.size());
+            // fetch details
+            return getDetailFetcher().fetch(rankResults);
+        }catch (ComponentNotFoundException e){
+            logger.error("{}", e);
+        }
+        return null;
     }
 
 }

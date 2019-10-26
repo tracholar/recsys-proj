@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface ABTestInfo {
+public @interface ABTestConf {
     String layerKey();
     String flowKey();
 }

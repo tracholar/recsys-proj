@@ -15,9 +15,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author tracholar.github.io
+ * @author tracholar.github.io
+ *
+ * <p>
  * ConfigurableSimpleRecEngine 抽象了通过配置生成推荐引擎所需要的模块。
- * 已经是一个独立的推荐引擎了！！
+ * 已经是一个独立的推荐引擎了！ 使用示例
+ *
+ * <pre>{@code
+ * ConfigurableSimpleRecEngine engine = new ConfigurableSimpleRecEngine()
+ * // 构造一个 RecEngineConfig 对象
+ * RecEngineConfig config = ...;
+ * engine.init(config);
+ * }
+ * </pre>
+ *
+ * {@code RecEngineConfig} 可以参看 {@link com.tracholar.recommend.engine.config.RecEngineConfig}
+ *
+ *
+ *
  */
 @Getter(AccessLevel.PROTECTED)
 public class ConfigurableSimpleRecEngine extends SimpleRecEngine {

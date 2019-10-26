@@ -1,6 +1,6 @@
 package com.tracholar.recommend.engine;
 
-import com.tracholar.recommend.abtest.ABTestInfo;
+import com.tracholar.recommend.abtest.ABTestConf;
 import com.tracholar.recommend.abtest.ABTestKey;
 import com.tracholar.recommend.abtest.ABTestProxy;
 import com.tracholar.recommend.engine.config.Autoload;
@@ -23,8 +23,8 @@ public class AutoloadRecEngine extends ConfigurableSimpleRecEngine {
                     ComponentConfig c = new ComponentConfig();
                     c.setClassName(e.getName());
                     c.setName(e.getSimpleName());
-                    if(e.isAnnotationPresent(ABTestInfo.class)){
-                        ABTestInfo info = e.getAnnotation(ABTestInfo.class);
+                    if(e.isAnnotationPresent(ABTestConf.class)){
+                        ABTestConf info = e.getAnnotation(ABTestConf.class);
                         ABTestKey key = new ABTestKey(info.layerKey(), info.flowKey());
                         c.setAbTestKey(key);
                     }

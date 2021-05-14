@@ -6,25 +6,33 @@ import com.tracholar.recommend.engine.DetailFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.*;
+import javax.validation.constraints.NotNull;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ArticleFetcher implements DetailFetcher<Article, Article> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+
     private Map<String, Article> fetchFromMysql(List<String> ids) {
         Map<String, Article> articles = new HashMap<>();
 
         try {
             StringBuffer idStr = new StringBuffer();
-            for(String id : ids) {
-                if(idStr.length() > 0) idStr.append(",");
+            for (String id : ids) {
+                if (idStr.length() > 0) idStr.append(",");
                 idStr.append(id);
             }
 
             Connection conn = MysqlDB.getInstance();
-            String sql = String.format("select * from article where id in (%s)",idStr.toString());
+            String sql = String.format("select * from article where id in (%s)", idStr.toString());
             Statement stat = conn.createStatement();
             ResultSet rs = stat.executeQuery(sql);
             while (rs.next()) {
@@ -41,21 +49,21 @@ public class ArticleFetcher implements DetailFetcher<Article, Article> {
 
             logger.debug("Fetcher article sql: {}", sql);
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("获取新闻文章失败！ {}", e);
         }
         return articles;
     }
 
     @Override
-    public List<Article> fetch(List<Article> arr){
+    public List<Article> fetch(@NotNull List<Article> arr) {
         List<String> ids = arr.stream().map(e -> e.getId()).collect(Collectors.toList());
         Map<String, Article> articles = fetchFromMysql(ids);
         List<Article> res = new LinkedList<>();
-        for(int i = 0; i<arr.size(); i++){
+        for (int i = 0; i < arr.size(); i++) {
             Article rankData = arr.get(i);
             String id = rankData.getId();
-            if(articles.containsKey(id)){
+            if (articles.containsKey(id)) {
                 Article article = articles.get(id);
                 article.setRank(rankData.getRank());
                 article.setScore(rankData.getScore());
@@ -65,5 +73,4 @@ public class ArticleFetcher implements DetailFetcher<Article, Article> {
         }
         return res;
     }
-
 }

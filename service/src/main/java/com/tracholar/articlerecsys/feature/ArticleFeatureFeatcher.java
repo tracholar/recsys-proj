@@ -17,6 +17,7 @@ public class ArticleFeatureFeatcher implements
         UserFeatureFetcher<User>,
         ItemFeatureFetcher<Article>,
         ContextFeatureFetcher<ReqContext> {
+    @Override
     public UserFeature fetch(User user){
         List<Feature> f = new LinkedList<>();
 
@@ -34,6 +35,8 @@ public class ArticleFeatureFeatcher implements
         return feats;
     }
     private ArticleFetcher fetcher = new ArticleFetcher();
+
+    @Override
     public List<ItemFeature> fetch(List<Article> arr){
         List<ItemFeature> featLists = new LinkedList<>();
 
@@ -60,6 +63,8 @@ public class ArticleFeatureFeatcher implements
         }
         return featLists;
     }
+
+    @Override
     public ContextFeature fetch(ReqContext ctx){
         List<Feature> ctxFeats = new LinkedList<>();
 

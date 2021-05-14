@@ -41,7 +41,7 @@ public class ArticleRecEngineWebAPI {
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory factory =
                 new TomcatEmbeddedServletContainerFactory();
-        factory.setPort(8888);
+        factory.setPort(9999);
         return factory;
     }
 

@@ -10,15 +10,10 @@ import lombok.*;
 @NoArgsConstructor
 public class Article extends JsonableData
         implements IItem<String>, RecallResult<String>, RankResult<String> {
-    @JSONField
     private String id;
-    @JSONField
     private String title;
-    @JSONField
     private String content;
-    @JSONField
     private String url;
-    @JSONField
     private String author;
 
     public Article(String id) {
@@ -28,9 +23,7 @@ public class Article extends JsonableData
         this.id = id;
         this.title = title;
     }
-    @JSONField
     private SimpleScore<Float> score;
-    @JSONField
     private int rank;
 
 }

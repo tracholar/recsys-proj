@@ -11,9 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SpringBootApplication
@@ -26,14 +30,31 @@ public class ArticleRecEngineWebAPI {
         engine = new ArticleRecEngine();
     }
 
-    @RequestMapping(value = "/", produces = "application/json; charset=UTF-8")
-    public List<Article> webApi() {
-        User user = new User("123", "dafad-fad-f-asdf-a-sd");
+    private User buildUser(HttpServletRequest request){
+        String uid = request.getParameter("uid");
+        User user = new User(uid, "dafad-fad-f-asdf-a-sd");
+        return user;
+    }
 
-        List<Article> articles = engine.recommend(user, new ReqContext("ADF-HJKH"));
-        logger.debug(JSON.toJSONString(articles, true));
+    private ReqContext buildContext(HttpServletRequest request){
+        return new ReqContext("ADF-HJKH");
+    }
+
+    @RequestMapping(value = "/api", produces = "application/json; charset=UTF-8")
+    public List<Article> webApi(HttpServletRequest request) {
+        User user = buildUser(request);
+        ReqContext ctx = buildContext(request);
+
+        List<Article> articles = engine.recommend(user, ctx);
 
         return articles;
+    }
+
+    @GetMapping(value = "/")
+    public ModelAndView index(){
+        ModelAndView indexView = new ModelAndView();
+        indexView.setViewName("index");
+        return indexView;
     }
 
 
@@ -42,6 +63,7 @@ public class ArticleRecEngineWebAPI {
         TomcatEmbeddedServletContainerFactory factory =
                 new TomcatEmbeddedServletContainerFactory();
         factory.setPort(9999);
+
         return factory;
     }
 
